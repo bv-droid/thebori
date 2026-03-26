@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BØRI — Logo System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@200;300&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: #080808;
+    display: flex; align-items: center; justify-content: center;
+    overflow-x: hidden; overflow-y: auto;
+    font-family: 'Libre Franklin', sans-serif;
+  }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.3; pointer-events: none; z-index: 10;
+  }
+
+  .page {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 48px; padding: 48px 24px 80px; width: 100%;
+  }
+
+  .logo-main {
+    width: min(82vw, 440px); position: relative;
+    opacity: 0; animation: reveal 1.6s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+  }
+  .logo-main svg { width: 100%; height: auto; display: block; }
+  .logo-main::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.1) 48%, rgba(255,255,255,0.05) 52%, transparent 70%);
+    background-size: 300% 100%; background-position: 150% 0;
+    animation: shimmer 0.7s cubic-bezier(0.4,0,0.2,1) 2s forwards;
+    pointer-events: none; mix-blend-mode: overlay;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes shimmer {
+    from { background-position: 150% 0; }
+    to   { background-position: -50% 0; }
+  }
+
+  .divider {
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #8B6914, transparent);
+    opacity: 0; animation: lineGrow 0.8s ease-out 2.2s forwards;
+  }
+  @keyframes lineGrow {
+    to { width: min(50vw, 280px); opacity: 0.4; }
+  }
+
+  .tagline {
+    font-weight: 200; letter-spacing: 0.5em; font-size: clamp(9px,1.3vw,11px);
+    color: rgba(139,105,20,0.4); text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.8s ease-out 2.5s forwards;
+  }
+  .meta {
+    display: flex; align-items: center; gap: 18px;
+    opacity: 0; animation: fadeUp 0.8s ease-out 2.8s forwards;
+  }
+  .meta span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: 11px; color: rgba(139,105,20,0.3); letter-spacing: 0.2em; }
+  .meta .dot { width: 2px; height: 2px; border-radius: 50%; background: rgba(139,105,20,0.25); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 0.7; transform: translateY(0); }
+  }
+
+  .section-label {
+    font-weight: 200; letter-spacing: 0.4em; font-size: 9px;
+    color: rgba(255,255,255,0.15); text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.8s ease-out 3s forwards;
+  }
+  .variants {
+    display: flex; gap: 36px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: fadeUp 1s ease-out 3.2s forwards;
+  }
+  .variant { text-align: center; }
+  .variant svg { width: 130px; height: auto; display: block; margin-bottom: 8px; transition: filter 0.3s; }
+  .variant:hover svg { filter: drop-shadow(0 0 16px rgba(255,255,255,0.04)); }
+  .variant-name { font-weight: 300; font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.18); }
+
+  @media (max-width: 600px) {
+    .variants { gap: 16px; }
+    .variant svg { width: 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════ MAIN LOGO (white on dark) ═══════════ -->
+  <div class="logo-main">
+    <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gP" x1="100" y1="40" x2="400" y2="500" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#F2EFE8"/>
+          <stop offset="100%" stop-color="#C8C3B4"/>
+        </linearGradient>
+        <linearGradient id="gC" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#D0CAB8"/>
+          <stop offset="100%" stop-color="#9A9484"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ═══ PAW ═══ -->
+      <!-- Main pad — organic shape, wider top, narrows at bottom -->
+      <path d="
+        M 250 500
+        C 175 500, 115 465, 100 415
+        C 85 365, 95 320, 125 285
+        C 155 250, 200 235, 250 232
+        C 300 235, 345 250, 375 285
+        C 405 320, 415 365, 400 415
+        C 385 465, 325 500, 250 500Z
+      " fill="url(#gP)"/>
+
+      <!-- Toe 1 (far left) — teardrop -->
+      <path d="
+        M 78 195
+        C 55 185, 38 155, 40 125
+        C 42 90, 60 62, 85 58
+        C 110 54, 130 75, 135 110
+        C 140 145, 125 182, 102 195
+        Z
+      " fill="url(#gP)"/>
+
+      <!-- Toe 2 (inner left) — teardrop -->
+      <path d="
+        M 170 140
+        C 150 132, 140 105, 142 75
+        C 144 45, 162 22, 185 18
+        C 208 14, 225 35, 228 65
+        C 231 100, 215 132, 195 140
+        Z
+      " fill="url(#gP)"/>
+
+      <!-- Toe 3 (inner right) — teardrop -->
+      <path d="
+        M 305 140
+        C 285 132, 269 100, 272 65
+        C 275 35, 292 14, 315 18
+        C 338 22, 356 45, 358 75
+        C 360 105, 350 132, 330 140
+        Z
+      " fill="url(#gP)"/>
+
+      <!-- Toe 4 (far right) — teardrop -->
+      <path d="
+        M 398 195
+        C 375 182, 360 145, 365 110
+        C 370 75, 390 54, 415 58
+        C 440 62, 458 90, 460 125
+        C 462 155, 445 185, 422 195
+        Z
+      " fill="url(#gP)"/>
+
+      <!-- Claws — sharp pointed -->
+      <path d="M56 52 Q68 22 76 12 Q84 22 92 55" fill="url(#gC)" opacity="0.6"/>
+      <path d="M158 14 Q170 -16 180 -24 Q190 -14 198 18" fill="url(#gC)" opacity="0.6"/>
+      <path d="M302 18 Q310 -14 320 -24 Q330 -16 342 14" fill="url(#gC)" opacity="0.6"/>
+      <path d="M408 55 Q416 22 424 12 Q432 22 444 52" fill="url(#gC)" opacity="0.6"/>
+
+      <!-- ═══ BØRI WORDMARK — bold filled ═══ -->
+      <g fill="#080808" opacity="0.88">
+
+        <!-- B -->
+        <path d="
+          M 120 325 L 120 435
+          L 120 325 L 155 325
+          Q 180 325, 180 345 Q 180 362, 160 365
+          L 120 365
+          L 160 365
+          Q 185 365, 185 385 Q 185 405, 162 408
+          L 120 408
+        " fill="none" stroke="#080808" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Ø -->
+        <ellipse cx="237" cy="380" rx="32" ry="44" fill="none" stroke="#080808" stroke-width="11"/>
+        <line x1="208" y1="418" x2="266" y2="342" stroke="#080808" stroke-width="11" stroke-linecap="round"/>
+
+        <!-- R -->
+        <path d="
+          M 290 325 L 290 435
+          M 290 325 L 320 325
+          Q 345 325, 345 348 Q 345 370, 322 372
+          L 290 372
+          M 318 372 L 350 435
+        " fill="none" stroke="#080808" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- I -->
+        <line x1="378" y1="325" x2="378" y2="435" stroke="#080808" stroke-width="12" stroke-linecap="round"/>
+        <line x1="362" y1="325" x2="394" y2="325" stroke="#080808" stroke-width="12" stroke-linecap="round"/>
+        <line x1="362" y1="435" x2="394" y2="435" stroke="#080808" stroke-width="12" stroke-linecap="round"/>
+
+      </g>
+    </svg>
+  </div>
+
+  <div class="divider"></div>
+  <div class="tagline">clothing for life</div>
+  <div class="meta">
+    <span>Astana</span><div class="dot"></div><span>MMXXVI</span>
+  </div>
+
+  <!-- ═══════════ LINE VARIANTS ═══════════ -->
+  <div class="section-label">Line Variants</div>
+  <div class="variants">
+
+    <!-- TACTICAL — olive -->
+    <div class="variant">
+      <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 500 C175 500 115 465 100 415 C85 365 95 320 125 285 C155 250 200 235 250 232 C300 235 345 250 375 285 C405 320 415 365 400 415 C385 465 325 500 250 500Z" fill="#4A5D3A"/>
+        <path d="M78 195 C55 185 38 155 40 125 C42 90 60 62 85 58 C110 54 130 75 135 110 C140 145 125 182 102 195Z" fill="#4A5D3A"/>
+        <path d="M170 140 C150 132 140 105 142 75 C144 45 162 22 185 18 C208 14 225 35 228 65 C231 100 215 132 195 140Z" fill="#4A5D3A"/>
+        <path d="M305 140 C285 132 269 100 272 65 C275 35 292 14 315 18 C338 22 356 45 358 75 C360 105 350 132 330 140Z" fill="#4A5D3A"/>
+        <path d="M398 195 C375 182 360 145 365 110 C370 75 390 54 415 58 C440 62 458 90 460 125 C462 155 445 185 422 195Z" fill="#4A5D3A"/>
+        <path d="M56 52 Q68 22 76 12 Q84 22 92 55" fill="#354828" opacity="0.8"/>
+        <path d="M158 14 Q170 -16 180 -24 Q190 -14 198 18" fill="#354828" opacity="0.8"/>
+        <path d="M302 18 Q310 -14 320 -24 Q330 -16 342 14" fill="#354828" opacity="0.8"/>
+        <path d="M408 55 Q416 22 424 12 Q432 22 444 52" fill="#354828" opacity="0.8"/>
+        <g fill="none" stroke="#1C2A14" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.8">
+          <path d="M120 325 L120 435 M120 325 L155 325 Q180 325 180 345 Q180 362 160 365 L120 365 L160 365 Q185 365 185 385 Q185 405 162 408 L120 408"/>
+          <ellipse cx="237" cy="380" rx="32" ry="44"/><line x1="208" y1="418" x2="266" y2="342"/>
+          <path d="M290 325 L290 435 M290 325 L320 325 Q345 325 345 348 Q345 370 322 372 L290 372 M318 372 L350 435"/>
+          <line x1="378" y1="325" x2="378" y2="435"/><line x1="362" y1="325" x2="394" y2="325"/><line x1="362" y1="435" x2="394" y2="435"/>
+        </g>
+        <text x="250" y="490" text-anchor="middle" fill="#1C2A14" font-family="sans-serif" font-weight="900" font-size="42" letter-spacing="6" opacity="0.55">TACTICAL</text>
+      </svg>
+      <span class="variant-name">Tactical</span>
+    </div>
+
+    <!-- WORKWEAR — black + orange -->
+    <div class="variant">
+      <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 500 C175 500 115 465 100 415 C85 365 95 320 125 285 C155 250 200 235 250 232 C300 235 345 250 375 285 C405 320 415 365 400 415 C385 465 325 500 250 500Z" fill="#1A1A1A"/>
+        <path d="M78 195 C55 185 38 155 40 125 C42 90 60 62 85 58 C110 54 130 75 135 110 C140 145 125 182 102 195Z" fill="#1A1A1A"/>
+        <path d="M170 140 C150 132 140 105 142 75 C144 45 162 22 185 18 C208 14 225 35 228 65 C231 100 215 132 195 140Z" fill="#1A1A1A"/>
+        <path d="M305 140 C285 132 269 100 272 65 C275 35 292 14 315 18 C338 22 356 45 358 75 C360 105 350 132 330 140Z" fill="#1A1A1A"/>
+        <path d="M398 195 C375 182 360 145 365 110 C370 75 390 54 415 58 C440 62 458 90 460 125 C462 155 445 185 422 195Z" fill="#1A1A1A"/>
+        <path d="M56 52 Q68 22 76 12 Q84 22 92 55" fill="#E85D00" opacity="0.9"/>
+        <path d="M158 14 Q170 -16 180 -24 Q190 -14 198 18" fill="#E85D00" opacity="0.9"/>
+        <path d="M302 18 Q310 -14 320 -24 Q330 -16 342 14" fill="#E85D00" opacity="0.9"/>
+        <path d="M408 55 Q416 22 424 12 Q432 22 444 52" fill="#E85D00" opacity="0.9"/>
+        <g fill="none" stroke="#E85D00" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+          <path d="M120 325 L120 435 M120 325 L155 325 Q180 325 180 345 Q180 362 160 365 L120 365 L160 365 Q185 365 185 385 Q185 405 162 408 L120 408"/>
+          <ellipse cx="237" cy="380" rx="32" ry="44"/><line x1="208" y1="418" x2="266" y2="342"/>
+          <path d="M290 325 L290 435 M290 325 L320 325 Q345 325 345 348 Q345 370 322 372 L290 372 M318 372 L350 435"/>
+          <line x1="378" y1="325" x2="378" y2="435"/><line x1="362" y1="325" x2="394" y2="325"/><line x1="362" y1="435" x2="394" y2="435"/>
+        </g>
+        <text x="250" y="490" text-anchor="middle" fill="#E85D00" font-family="sans-serif" font-weight="900" font-size="38" letter-spacing="4" opacity="0.7">WORKWEAR</text>
+      </svg>
+      <span class="variant-name">Workwear</span>
+    </div>
+
+    <!-- OUTDOOR — gray -->
+    <div class="variant">
+      <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 500 C175 500 115 465 100 415 C85 365 95 320 125 285 C155 250 200 235 250 232 C300 235 345 250 375 285 C405 320 415 365 400 415 C385 465 325 500 250 500Z" fill="#444"/>
+        <path d="M78 195 C55 185 38 155 40 125 C42 90 60 62 85 58 C110 54 130 75 135 110 C140 145 125 182 102 195Z" fill="#444"/>
+        <path d="M170 140 C150 132 140 105 142 75 C144 45 162 22 185 18 C208 14 225 35 228 65 C231 100 215 132 195 140Z" fill="#444"/>
+        <path d="M305 140 C285 132 269 100 272 65 C275 35 292 14 315 18 C338 22 356 45 358 75 C360 105 350 132 330 140Z" fill="#444"/>
+        <path d="M398 195 C375 182 360 145 365 110 C370 75 390 54 415 58 C440 62 458 90 460 125 C462 155 445 185 422 195Z" fill="#444"/>
+        <path d="M56 52 Q68 22 76 12 Q84 22 92 55" fill="#333" opacity="0.8"/>
+        <path d="M158 14 Q170 -16 180 -24 Q190 -14 198 18" fill="#333" opacity="0.8"/>
+        <path d="M302 18 Q310 -14 320 -24 Q330 -16 342 14" fill="#333" opacity="0.8"/>
+        <path d="M408 55 Q416 22 424 12 Q432 22 444 52" fill="#333" opacity="0.8"/>
+        <g fill="none" stroke="#1A1A1A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+          <path d="M120 325 L120 435 M120 325 L155 325 Q180 325 180 345 Q180 362 160 365 L120 365 L160 365 Q185 365 185 385 Q185 405 162 408 L120 408"/>
+          <ellipse cx="237" cy="380" rx="32" ry="44"/><line x1="208" y1="418" x2="266" y2="342"/>
+          <path d="M290 325 L290 435 M290 325 L320 325 Q345 325 345 348 Q345 370 322 372 L290 372 M318 372 L350 435"/>
+          <line x1="378" y1="325" x2="378" y2="435"/><line x1="362" y1="325" x2="394" y2="325"/><line x1="362" y1="435" x2="394" y2="435"/>
+        </g>
+        <text x="250" y="490" text-anchor="middle" fill="#1A1A1A" font-family="sans-serif" font-weight="900" font-size="40" letter-spacing="6" opacity="0.55">OUTDOOR</text>
+      </svg>
+      <span class="variant-name">Outdoor</span>
+    </div>
+
+    <!-- SPORT — black + blue -->
+    <div class="variant">
+      <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 500 C175 500 115 465 100 415 C85 365 95 320 125 285 C155 250 200 235 250 232 C300 235 345 250 375 285 C405 320 415 365 400 415 C385 465 325 500 250 500Z" fill="#111"/>
+        <path d="M78 195 C55 185 38 155 40 125 C42 90 60 62 85 58 C110 54 130 75 135 110 C140 145 125 182 102 195Z" fill="#111"/>
+        <path d="M170 140 C150 132 140 105 142 75 C144 45 162 22 185 18 C208 14 225 35 228 65 C231 100 215 132 195 140Z" fill="#111"/>
+        <path d="M305 140 C285 132 269 100 272 65 C275 35 292 14 315 18 C338 22 356 45 358 75 C360 105 350 132 330 140Z" fill="#111"/>
+        <path d="M398 195 C375 182 360 145 365 110 C370 75 390 54 415 58 C440 62 458 90 460 125 C462 155 445 185 422 195Z" fill="#111"/>
+        <path d="M56 52 Q68 22 76 12 Q84 22 92 55" fill="#1A6BC4" opacity="0.9"/>
+        <path d="M158 14 Q170 -16 180 -24 Q190 -14 198 18" fill="#1A6BC4" opacity="0.9"/>
+        <path d="M302 18 Q310 -14 320 -24 Q330 -16 342 14" fill="#1A6BC4" opacity="0.9"/>
+        <path d="M408 55 Q416 22 424 12 Q432 22 444 52" fill="#1A6BC4" opacity="0.9"/>
+        <g fill="none" stroke="#1A6BC4" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+          <path d="M120 325 L120 435 M120 325 L155 325 Q180 325 180 345 Q180 362 160 365 L120 365 L160 365 Q185 365 185 385 Q185 405 162 408 L120 408"/>
+          <ellipse cx="237" cy="380" rx="32" ry="44"/><line x1="208" y1="418" x2="266" y2="342"/>
+          <path d="M290 325 L290 435 M290 325 L320 325 Q345 325 345 348 Q345 370 322 372 L290 372 M318 372 L350 435"/>
+          <line x1="378" y1="325" x2="378" y2="435"/><line x1="362" y1="325" x2="394" y2="325"/><line x1="362" y1="435" x2="394" y2="435"/>
+        </g>
+        <text x="250" y="490" text-anchor="middle" fill="#1A6BC4" font-family="sans-serif" font-weight="900" font-size="42" letter-spacing="8" opacity="0.7">SPORT</text>
+      </svg>
+      <span class="variant-name">Sport</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
