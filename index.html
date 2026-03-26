@@ -24,7 +24,11 @@
   --font-primary: 'Montserrat', sans-serif;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:16px; }
+html { font-size:16px; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 body { font-family:var(--font-primary); background:var(--stone); color:var(--gray-900); line-height:1.7; overflow-x:hidden; -webkit-font-smoothing:antialiased; background-image:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E"); }
 .container { max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,60px); }
 
@@ -106,11 +110,9 @@ nav.scrolled .nav-glass {
   0%,100% { filter:drop-shadow(0 0 20px rgba(190,196,204,.1)); }
   50% { filter:drop-shadow(0 0 60px rgba(190,196,204,.3)) drop-shadow(0 0 120px rgba(190,196,204,.1)); }
 }
-.hero-brand { font-family:var(--font-brand); font-size:clamp(4rem,10vw,9rem); font-weight:700; letter-spacing:.5em; background:linear-gradient(180deg,#E0E4E8 0%,#A8B0B8 40%,#8A929A 70%,#C8D0D8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; opacity:0; }
-.hero-brand.revealed { animation:slideUp 1s ease forwards; }
 .hero-tagline { font-family:var(--font-primary); font-size:clamp(.8rem,1.5vw,1rem); font-weight:300; letter-spacing:.4em; text-transform:uppercase; color:rgba(190,196,204,.7); margin-top:1rem; opacity:0; }
 .hero-tagline.revealed { animation:slideUp 1s ease .3s forwards; }
-.hero-cta { display:inline-block; margin-top:3rem; padding:1rem 3rem; border:1px solid rgba(255,255,255,.3); color:rgba(255,255,255,.8); font-family:var(--font-primary); font-size:.7rem; font-weight:500; letter-spacing:.3em; text-transform:uppercase; text-decoration:none; transition:all .4s; opacity:0; }
+.hero-cta { display:inline-block; margin-top:3rem; padding:1rem 3rem; border:1px solid rgba(255,255,255,.3); color:rgba(255,255,255,.8); font-family:var(--font-primary); font-size:.7rem; font-weight:500; letter-spacing:.3em; text-transform:uppercase; text-decoration:none; transition:all .4s; opacity:0; cursor:pointer; }
 .hero-cta.revealed { animation:slideUp 1s ease .6s forwards; }
 .hero-cta:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.6); box-shadow:0 0 30px rgba(255,255,255,.1); }
 @keyframes slideUp { 0%{opacity:0;transform:translateY(30px);} 100%{opacity:1;transform:translateY(0);} }
@@ -128,111 +130,112 @@ nav.scrolled .nav-glass {
 .hero-scroll::after { content:''; display:block; width:1px; height:60px; background:linear-gradient(to bottom,var(--platinum),transparent); animation:scrollPulse 2s infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:.3;} 50%{opacity:1;} }
 
-/* BRAND STORY */
-.story { padding:clamp(80px,12vw,150px) 0; position:relative; }
+/* ═══ BRAND STORY - Horizontal Scroll ═══ */
+.story { padding:clamp(80px,12vw,150px) 0; position:relative; overflow:hidden; }
 .story-bg-logo { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60vw; max-width:600px; opacity:.025; pointer-events:none; }
 .story-label { font-size:.65rem; letter-spacing:.4em; text-transform:uppercase; color:var(--platinum-dark); font-weight:600; margin-bottom:1.5rem; display:flex; align-items:center; gap:1rem; }
 .story-label::before { content:''; width:40px; height:1px; background:var(--platinum-dark); }
 .story-title { font-family:var(--font-accent); font-size:clamp(2.5rem,6vw,4.5rem); letter-spacing:.05em; text-transform:uppercase; line-height:1.1; margin-bottom:2rem; color:var(--gray-900); }
 .story-divider { width:80px; height:1px; margin:2rem 0; background:linear-gradient(90deg,var(--platinum-dark),var(--stone-dark),transparent); }
-.story-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-top:3rem; align-items:start; }
-@media(max-width:768px) { .story-grid{grid-template-columns:1fr;gap:2rem;} }
-.story-text p { margin-bottom:1.5rem; font-weight:300; color:var(--gray-700); font-size:.95rem; }
-.story-text p:first-child::first-letter { font-family:var(--font-accent); font-size:4.5rem; float:left; line-height:.8; margin-right:.5rem; margin-top:.1rem; color:var(--platinum-dark); }
-.values-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
-.value-card { border:1px solid rgba(0,0,0,.1); padding:1.8rem; background:rgba(255,255,255,.12); backdrop-filter:blur(10px); transition:all .4s; position:relative; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); }
+
+/* Horizontal scroll text */
+.story-hscroll-wrap { overflow:hidden; position:relative; }
+.story-hscroll { display:flex; gap:6vw; padding:4rem 0; will-change:transform; }
+.story-hscroll-item { flex:0 0 auto; width:clamp(300px,40vw,500px); }
+.story-hscroll-item p { font-weight:300; color:var(--gray-700); font-size:.95rem; line-height:1.8; }
+.story-hscroll-item p:first-child::first-letter { font-family:var(--font-accent); font-size:4.5rem; float:left; line-height:.8; margin-right:.5rem; margin-top:.1rem; color:var(--platinum-dark); }
+
+/* Values */
+.values-section { padding:clamp(60px,8vw,100px) 0; }
+.values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+@media(max-width:900px) { .values-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:500px) { .values-grid{grid-template-columns:1fr;} }
+.value-card { border:1px solid rgba(0,0,0,.1); padding:2rem; background:rgba(255,255,255,.12); backdrop-filter:blur(10px); transition:all .4s; position:relative; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); }
 .value-card::before { content:''; position:absolute; top:0; left:0; width:0; height:2px; background:var(--platinum-dark); transition:width .6s; }
-.value-card:hover { border-color:rgba(0,0,0,.2); background:rgba(255,255,255,.2); box-shadow:0 8px 30px rgba(0,0,0,.1); }
+.value-card:hover { border-color:rgba(0,0,0,.2); background:rgba(255,255,255,.2); box-shadow:0 8px 30px rgba(0,0,0,.1); transform:translateY(-4px); }
 .value-card:hover::before { width:100%; }
 .value-card h4 { font-family:var(--font-accent); font-size:1.5rem; color:var(--gray-900); margin-bottom:.5rem; letter-spacing:.05em; text-transform:uppercase; }
 .value-card p { font-size:.8rem; color:var(--gray-400); line-height:1.6; }
 
-/* REVEAL */
-.reveal { opacity:0; transform:translateY(50px); transition:all .8s cubic-bezier(.16,1,.3,1); }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-delay-1{transition-delay:.1s} .reveal-delay-2{transition-delay:.2s} .reveal-delay-3{transition-delay:.3s} .reveal-delay-4{transition-delay:.4s}
+/* ═══ LIFESTYLE IMMERSION ═══ */
+.lifestyle { position:relative; }
+.lifestyle-scene { min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden; }
+.lifestyle-scene-inner { display:flex; align-items:center; width:100%; position:relative; z-index:2; }
+.lifestyle-svg-wrap { flex:1; display:flex; justify-content:center; align-items:center; min-height:400px; position:relative; }
+.lifestyle-svg-wrap svg { width:clamp(280px,35vw,500px); height:auto; }
+.lifestyle-text-wrap { flex:1; padding:2rem; }
+.lifestyle-big-text { font-family:var(--font-brand); font-size:clamp(3rem,8vw,7rem); font-weight:700; letter-spacing:.1em; text-transform:uppercase; line-height:1; color:var(--gray-900); opacity:.12; }
+.lifestyle-label { font-size:.65rem; letter-spacing:.4em; text-transform:uppercase; font-weight:600; color:var(--platinum-dark); margin-bottom:.5rem; }
+.lifestyle-desc { font-size:.9rem; font-weight:300; color:var(--gray-700); max-width:400px; line-height:1.8; }
+.lifestyle-scene:nth-child(even) .lifestyle-scene-inner { flex-direction:row-reverse; }
+@media(max-width:768px) {
+  .lifestyle-scene-inner { flex-direction:column !important; text-align:center; }
+  .lifestyle-text-wrap { padding:1rem; }
+  .lifestyle-big-text { font-size:3rem; }
+  .lifestyle-desc { margin:0 auto; }
+}
 
-/* WOLF TRAIL between sections */
+/* ═══ WOLF TRAIL between sections ═══ */
 .wolf-trail { position:relative; height:200px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .wolf-trail-tracks { display:flex; align-items:center; gap:40px; }
 .wolf-trail-paw { opacity:0; transform:scale(.6); }
 .wolf-trail-paw svg { width:22px; height:auto; }
 .wolf-trail-paw:nth-child(odd) { transform:scale(.6) rotate(-15deg); }
 .wolf-trail-paw:nth-child(even) { transform:scale(.6) rotate(15deg) translateY(15px); }
-.wolf-trail.visible .wolf-trail-paw { animation:pawStep .6s ease forwards; }
-@keyframes pawStep { to { opacity:.15; transform:scale(1) rotate(0); } }
 .wolf-trail-line { position:absolute; top:50%; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,rgba(0,0,0,.12),transparent); }
 
-/* SUB-BRAND SECTIONS */
-.brand-section { min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden; }
+/* ═══ SUB-BRAND SECTIONS ═══ */
+.brand-section { min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden; color:var(--white); }
 .brand-section .container { position:relative; z-index:2; width:100%; }
 .brand-section-label { font-size:.6rem; letter-spacing:.4em; text-transform:uppercase; font-weight:600; margin-bottom:1rem; }
 .brand-section-name { font-family:var(--font-brand); font-weight:700; font-size:clamp(3.5rem,10vw,8rem); letter-spacing:.15em; text-transform:uppercase; margin-bottom:.5rem; line-height:1; }
 .brand-section-tagline { font-family:var(--font-primary); font-weight:300; font-size:clamp(1rem,2vw,1.3rem); letter-spacing:.2em; margin-bottom:2rem; }
 .brand-section-desc { max-width:500px; font-size:.9rem; font-weight:300; color:var(--gray-300); line-height:1.8; }
-.brand-section { color:var(--white); }
-.brand-section-refs { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.5rem; }
-.ref-tag { font-size:.6rem; padding:.3rem .8rem; border:1px solid rgba(168,176,184,.2); letter-spacing:.15em; text-transform:uppercase; color:var(--gray-300); }
 
-/* Sub-brand icon */
-.brand-icon { position:absolute; right:5%; top:50%; transform:translateY(-50%); opacity:0; transition:all 2s cubic-bezier(.16,1,.3,1); }
-.brand-icon.visible { opacity:1; transform:translateY(-50%) scale(1); }
-.brand-icon svg { width:clamp(120px,20vw,260px); height:auto; }
-@media(max-width:900px) { .brand-icon{position:relative;right:auto;top:auto;transform:none;margin:2rem 0;} .brand-icon.visible{transform:none;} .brand-icon svg{width:100px;} }
+/* Sub-brand icon - BIGGER */
+.brand-icon { position:absolute; right:5%; top:50%; transform:translateY(-50%); opacity:0; }
+.brand-icon svg { width:clamp(180px,25vw,300px); height:auto; }
+@media(max-width:900px) { .brand-icon{position:relative;right:auto;top:auto;transform:none;margin:2rem 0;} .brand-icon svg{width:120px;} }
 
 /* ═══ TACTICAL ═══ */
 .section-tactical { background:linear-gradient(135deg,#2A3020,#1E2418 50%,#252D1E); }
 .section-tactical::before { content:''; position:absolute; inset:0; z-index:1; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(74,93,35,.03) 2px,rgba(74,93,35,.03) 4px); pointer-events:none; }
 .section-tactical .brand-section-label { color:var(--tactical-light); }
 .section-tactical .brand-section-name .accent { color:var(--tactical-light); }
-.tactical-line { width:0; height:2px; background:linear-gradient(90deg,var(--tactical-light),transparent); margin:2rem 0; transition:width 2s cubic-bezier(.16,1,.3,1); }
-.tactical-line.visible { width:350px; }
+.tactical-line { width:0; height:2px; background:linear-gradient(90deg,var(--tactical-light),transparent); margin:2rem 0; }
 .glitch { position:relative; }
-.glitch.active { animation:glitchText .5s ease; }
-@keyframes glitchText {
-  0%{transform:translate(0);opacity:0;} 10%{transform:translate(-3px,2px);opacity:.5;filter:hue-rotate(90deg);}
-  20%{transform:translate(3px,-1px);opacity:.8;} 30%{transform:translate(-2px,0);filter:none;}
-  50%{transform:translate(-1px,-1px);opacity:1;} 100%{transform:translate(0);opacity:1;}
-}
 /* Tactical icon: crosshair */
 .tactical-icon .crosshair-ring { fill:none; stroke:var(--tactical-light); stroke-width:1; opacity:.3; }
 .tactical-icon .crosshair-line { stroke:var(--tactical-light); stroke-width:.5; opacity:.4; }
 .tactical-icon .crosshair-dot { fill:var(--tactical-light); opacity:.5; }
-.brand-icon.visible .crosshair-ring { animation:chRotate 10s linear infinite; transform-origin:center; }
-@keyframes chRotate { to{transform:rotate(360deg);} }
-.brand-icon.visible .crosshair-dot { animation:chPulse 2s ease infinite; }
-@keyframes chPulse { 0%,100%{r:3;opacity:.3;} 50%{r:5;opacity:.7;} }
+/* Animated reticle */
+.tactical-reticle { position:absolute; right:8%; top:50%; transform:translateY(-50%); width:300px; height:300px; opacity:0; pointer-events:none; z-index:1; }
+.tactical-reticle .reticle-ring { fill:none; stroke:var(--tactical-light); stroke-width:.5; opacity:.2; }
+.tactical-reticle .reticle-cross { stroke:var(--tactical-light); stroke-width:.3; opacity:.15; }
 
 /* ═══ WORKWEAR ═══ */
 .section-workwear { background:linear-gradient(135deg,#2E2820,#261E18 50%,#2A2218); }
 .section-workwear::before { content:''; position:absolute; inset:0; z-index:1; background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(212,106,26,.03) 80px,rgba(212,106,26,.03) 81px),repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(212,106,26,.03) 80px,rgba(212,106,26,.03) 81px); pointer-events:none; }
 .section-workwear .brand-section-label { color:var(--workwear-light); }
 .section-workwear .brand-section-name .accent { color:var(--workwear-light); }
-.stamp { opacity:0; transform:scale(2) rotate(-5deg); transition:all .4s cubic-bezier(.25,.46,.45,.94); }
-.stamp.active { opacity:1; transform:scale(1) rotate(0); }
-.workwear-bar { width:0; height:4px; background:linear-gradient(90deg,var(--workwear),var(--workwear-light),transparent); margin:1.5rem 0; transition:width 2s cubic-bezier(.16,1,.3,1) .3s; }
-.workwear-bar.visible { width:300px; }
-.industrial-corner { position:absolute; width:30px; height:30px; border-color:var(--workwear); border-style:solid; opacity:0; transition:opacity 1s; }
-.industrial-corner.visible { opacity:.2; animation:cornerPulse 3s ease-in-out infinite; }
+.stamp { opacity:0; transform:scale(2) rotate(-5deg); }
+.workwear-bar { width:0; height:4px; background:linear-gradient(90deg,var(--workwear),var(--workwear-light),transparent); margin:1.5rem 0; }
+.industrial-corner { position:absolute; width:30px; height:30px; border-color:var(--workwear); border-style:solid; opacity:0; z-index:2; }
 .corner-tl{top:40px;left:40px;border-width:2px 0 0 2px;} .corner-tr{top:40px;right:40px;border-width:2px 2px 0 0;}
 .corner-bl{bottom:40px;left:40px;border-width:0 0 2px 2px;} .corner-br{bottom:40px;right:40px;border-width:0 2px 2px 0;}
 @keyframes cornerPulse { 0%,100%{opacity:.15;} 50%{opacity:.4;} }
 /* Workwear icon: wrench/gear */
 .workwear-icon .gear-outer { fill:none; stroke:var(--workwear-light); stroke-width:1.5; opacity:.3; }
 .workwear-icon .gear-inner { fill:none; stroke:var(--workwear-light); stroke-width:1; opacity:.2; }
-.brand-icon.visible .gear-outer { animation:gearSpin 12s linear infinite; transform-origin:center; }
-@keyframes gearSpin { to{transform:rotate(360deg);} }
 
 /* ═══ OUTDOOR ═══ */
 .section-outdoor { background:linear-gradient(180deg,#1A2028,#222830 40%,#1A2028); }
 .section-outdoor .brand-section-label { color:var(--outdoor-light); }
 .section-outdoor .brand-section-name .accent { color:var(--outdoor-light); }
 #outdoor-canvas { position:absolute; inset:0; z-index:0; pointer-events:none; }
-.wind-text span { display:inline-block; opacity:0; transform:translateX(80px); filter:blur(4px); transition:all .6s cubic-bezier(.16,1,.3,1); }
-.wind-text.active span { opacity:1; transform:translateX(0); filter:blur(0); }
+.wind-text span { display:inline-block; }
 .mountain-svg { position:absolute; bottom:0; left:0; right:0; height:200px; z-index:1; opacity:.08; }
-.mountain-svg path { stroke:var(--outdoor); stroke-width:1; fill:none; stroke-dasharray:2000; stroke-dashoffset:2000; transition:stroke-dashoffset 3s ease; }
-.mountain-svg.visible path { stroke-dashoffset:0; }
+.mountain-svg path { stroke:var(--outdoor); stroke-width:1; fill:none; stroke-dasharray:2000; stroke-dashoffset:2000; }
 .fog { position:absolute; left:0; right:0; height:150px; z-index:1; pointer-events:none; }
 .fog-top{top:0;background:linear-gradient(#1A2028,transparent);} .fog-bottom{bottom:0;background:linear-gradient(transparent,#1A2028);}
 .fog-mid { top:60%; height:100px; background:linear-gradient(transparent,rgba(107,123,141,.05),transparent); animation:fogDrift 8s ease-in-out infinite; }
@@ -240,8 +243,6 @@ nav.scrolled .nav-glass {
 /* Outdoor icon: compass */
 .outdoor-icon .compass-ring { fill:none; stroke:var(--outdoor-light); stroke-width:1; opacity:.3; }
 .outdoor-icon .compass-needle { fill:var(--outdoor-light); opacity:.4; }
-.brand-icon.visible .compass-needle { animation:needleSway 4s ease-in-out infinite; transform-origin:center; }
-@keyframes needleSway { 0%,100%{transform:rotate(-15deg);} 50%{transform:rotate(15deg);} }
 
 /* ═══ SPORT ═══ */
 .section-sport { background:linear-gradient(135deg,#151A28,#1A2030 50%,#182038); }
@@ -250,10 +251,7 @@ nav.scrolled .nav-glass {
 .section-sport .brand-section-name .accent { color:var(--sport-light); }
 .speed-lines { position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
 .speed-line { position:absolute; height:1px; background:linear-gradient(90deg,transparent,var(--sport),transparent); opacity:0; left:-100%; }
-.speed-lines.active .speed-line { animation:speedDash .8s ease forwards; }
-@keyframes speedDash { 0%{left:-100%;opacity:0;} 50%{opacity:.4;} 100%{left:100%;opacity:0;} }
-.pulse-rings { position:absolute; right:10%; top:50%; transform:translateY(-50%); width:300px; height:300px; opacity:0; transition:opacity 1s; }
-.pulse-rings.visible { opacity:1; }
+.pulse-rings { position:absolute; right:10%; top:50%; transform:translateY(-50%); width:300px; height:300px; opacity:0; }
 .pulse-ring { position:absolute; inset:0; border:1px solid var(--sport); border-radius:50%; opacity:0; }
 .pulse-ring:nth-child(1){animation:pulseExpand 3s ease-out infinite 0s;} .pulse-ring:nth-child(2){animation:pulseExpand 3s ease-out infinite 1s;} .pulse-ring:nth-child(3){animation:pulseExpand 3s ease-out infinite 2s;}
 @keyframes pulseExpand { 0%{transform:scale(.3);opacity:.5;} 100%{transform:scale(1);opacity:0;} }
@@ -263,17 +261,9 @@ nav.scrolled .nav-glass {
 .stat-label { font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gray-400); }
 /* Sport icon: lightning bolt */
 .sport-icon .bolt { fill:none; stroke:var(--sport-light); stroke-width:1.5; opacity:.4; }
-.brand-icon.visible .bolt { animation:boltFlash 3s ease infinite; }
-@keyframes boltFlash { 0%,80%,100%{opacity:.2;filter:drop-shadow(0 0 0 transparent);} 85%{opacity:.8;filter:drop-shadow(0 0 15px rgba(75,131,255,.5));} }
 
-/* MADE IN */
-.made-section { padding:clamp(80px,10vw,120px) 0; text-align:center; border-top:1px solid rgba(168,176,184,.08); border-bottom:1px solid rgba(168,176,184,.08); }
-.made-label { font-size:.6rem; letter-spacing:.5em; text-transform:uppercase; color:var(--platinum-dark); margin-bottom:1.5rem; }
-.made-section h3 { font-family:var(--font-accent); font-size:clamp(2rem,4vw,3rem); text-transform:uppercase; letter-spacing:.1em; margin-bottom:1rem; }
-.made-section p { font-size:.85rem; color:var(--gray-400); font-weight:300; max-width:500px; margin:0 auto; line-height:1.8; }
-
-/* FOOTER */
-.footer { padding:5rem 0 3rem; text-align:center; background:var(--gray-900); color:var(--white); }
+/* ═══ FOOTER ═══ */
+.footer { padding:5rem 0 3rem; text-align:center; background:var(--gray-900); color:var(--white); position:relative; overflow:hidden; }
 .footer-logo { margin-bottom:2rem; }
 .footer-logo svg { width:clamp(120px,20vw,200px); height:auto; filter:drop-shadow(0 0 30px rgba(168,176,184,.12)); }
 .footer-brand { font-family:var(--font-brand); font-size:1.2rem; font-weight:700; letter-spacing:.4em; color:var(--platinum-light); margin-bottom:.5rem; }
@@ -282,6 +272,9 @@ nav.scrolled .nav-glass {
 .footer-links a { color:var(--gray-400); text-decoration:none; font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; transition:color .3s; }
 .footer-links a:hover { color:var(--white); }
 .footer-copy { font-size:.6rem; color:var(--gray-700); letter-spacing:.1em; }
+
+/* ═══ UTILITY ═══ */
+.gs-reveal { opacity:0; visibility:hidden; }
 </style>
 </head>
 <body>
@@ -318,8 +311,8 @@ nav.scrolled .nav-glass {
         <path d="M2.98576 156.214L7.98576 145.714L21.4858 149.214L31.9858 145.714L42.9858 141.714H62.4858L79.4858 145.714L99.9858 156.214L109.486 170.214V184.214L104.986 199.714L95.9858 213.214L113.986 223.214L121.986 233.714L127.986 247.214V261.214V272.714L121.986 284.714L113.986 293.214L104.986 299.714L88.4858 312.214L73.9858 318.214L58.4858 323.714L42.9858 327.214H25.9858L7.98576 323.714L2.98576 312.214L15.9858 299.714L21.4858 279.214V184.214L15.9858 175.214L7.98576 166.714L2.98576 156.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M49.9858 179.714L54.4858 167.214L70.9858 169.214L77.4858 179.714V191.214L68.4858 200.714L54.4858 206.214L49.9858 179.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M54.4858 293.214V234.714H67.4858L78.9858 236.714L88.4858 244.714L93.4858 261.214L88.4858 276.714L75.9858 289.214L54.4858 293.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M37.4858 120.214V135.714L53.4858 127.714H60.9858L64.4858 115.214V101.714L68.4858 86.214L53.4858 96.714L44.4858 107.214L37.4858 120.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M146.486 262.214L135.486 252.714L140.986 245.214L132.986 231.714L129.486 224.214L125.486 211.214V198.214L129.486 185.714L135.486 174.714L146.486 166.214L159.486 158.714L171.486 154.714H181.986H190.986L203.486 158.714L211.486 148.714L221.486 158.714L215.986 169.714L221.486 174.714L226.986 185.714L230.486 198.214V211.214L226.986 224.214L221.486 234.214L211.486 245.214L197.986 252.714L181.986 258.214H165.986L151.486 252.714L146.486 262.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M156.986 209.214V220.714L187.986 177.714H177.986H169.986L165.986 181.714L160.986 185.214L156.986 191.214L153.486 200.214L156.986 209.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M168.486 234.214L199.986 193.214L203.486 205.714L199.986 214.214V223.714L190.986 234.214L181.986 237.714L168.486 234.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M234.986 180.714V165.214H253.986H268.486L273.486 161.214H282.486L290.986 158.214H296.986L303.986 161.214L314.486 165.214L319.486 171.714L325.486 180.714L329.986 187.714V198.714L325.486 204.214V210.714L319.486 219.714L314.486 227.214L301.986 229.714L314.486 245.214L334.986 285.714L340.986 294.214L346.486 297.214L359.486 300.214L365.986 302.714H374.486L388.986 300.214L380.986 312.214H376.486L371.986 317.714H365.986H359.486H352.986H346.486H340.986H334.986L325.486 312.214L319.486 307.214L310.986 297.214L303.986 289.714L290.986 273.214V264.714L285.486 256.214L282.486 251.714L278.986 247.714L273.486 245.714L268.486 247.714L270.486 297.214L263.486 294.214L253.986 285.714L245.486 279.214L238.986 268.714L234.986 258.714V251.714L238.986 245.214L242.486 234.714V227.214V219.714V210.714L238.986 198.714V187.714L234.986 180.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M269.986 213.714V183.214L280.986 179.714H288.986L294.486 183.214L297.986 189.714V196.214L294.486 203.714L288.986 209.214L280.986 213.714H269.986Z" stroke="#A8B0B8" stroke-width="5"/><path d="M352.486 283.214L342.486 278.214L344.986 267.714V257.214V243.214V235.214V223.214V214.214V205.214L342.486 196.214V190.214L348.986 185.714L360.486 190.214H367.486H374.986L379.486 196.214V207.714V218.214V229.214L374.986 243.214V257.214L379.486 271.714L383.986 288.214H374.986H367.486H360.486L352.486 283.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M343.986 166.214V156.714L352.486 145.714H360.986H369.486L373.986 150.714L378.986 156.714L381.986 164.214L378.986 171.714V178.214H369.486H360.986H352.486L343.986 171.714V166.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M352.486 112.714V132.714L365.486 139.214H374.486V132.714V126.214V120.714L368.986 112.714L361.486 103.714L356.486 98.714L343.986 95.214L352.486 112.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
       </svg>
     </div>
-    <p class="hero-tagline" id="heroTagline" data-i18n="hero_tagline">Spirit of the Steppe</p>
-    <a href="#story" class="hero-cta" id="heroCta" data-i18n="hero_cta">Discover</a>
+    <p class="hero-tagline" id="heroTagline" data-i18n="hero_tagline">ДУХ СТЕПИ</p>
+    <a href="#story" class="hero-cta" id="heroCta" data-i18n="hero_cta">УЗНАТЬ БОЛЬШЕ</a>
   </div>
   <!-- Wolf tracks -->
   <div class="wolf-tracks" id="wolfTracks"></div>
@@ -328,37 +321,248 @@ nav.scrolled .nav-glass {
 
 <!-- BRAND STORY -->
 <section class="story" id="story">
-  <div class="story-bg-logo">
+  <div class="story-bg-logo" id="storyBgLogo">
     <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.5">
       <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="3"/>
     </svg>
   </div>
   <div class="container">
-    <div class="reveal">
-      <div class="story-label" data-i18n="story_label">Brand Story</div>
-      <h2 class="story-title" data-i18n="story_title">Bori. Duh Volka. Sila Stepi.</h2>
+    <div class="gs-reveal">
+      <div class="story-label" data-i18n="story_label">ИСТОРИЯ БРЕНДА</div>
+      <h2 class="story-title" data-i18n="story_title">Бөрі. Дух Волка.<br>Сила Степи.</h2>
       <div class="story-divider"></div>
     </div>
-    <div class="story-grid">
-      <div class="story-text reveal">
-        <p data-i18n="story_p1">story p1</p>
-        <p data-i18n="story_p2">story p2</p>
-        <p data-i18n="story_p3">story p3</p>
-      </div>
-      <div class="values-grid">
-        <div class="value-card reveal reveal-delay-1"><h4 data-i18n="val1_title">val1</h4><p data-i18n="val1_desc">desc</p></div>
-        <div class="value-card reveal reveal-delay-2"><h4 data-i18n="val2_title">val2</h4><p data-i18n="val2_desc">desc</p></div>
-        <div class="value-card reveal reveal-delay-3"><h4 data-i18n="val3_title">val3</h4><p data-i18n="val3_desc">desc</p></div>
-        <div class="value-card reveal reveal-delay-4"><h4 data-i18n="val4_title">val4</h4><p data-i18n="val4_desc">desc</p></div>
+    <!-- Horizontal scroll text -->
+    <div class="story-hscroll-wrap">
+      <div class="story-hscroll" id="storyHscroll">
+        <div class="story-hscroll-item">
+          <p data-i18n="story_p1">Бөрі — волк на казахском языке. Для тюркских народов Великой Степи волк — не просто хищник, а тотемное животное, прародитель, символ несгибаемой воли и свободы.</p>
+        </div>
+        <div class="story-hscroll-item">
+          <p data-i18n="story_p2">Торговая марка BØRI наследует эту философию. Каждое изделие — воплощение силы, выносливости и верности своим принципам.</p>
+        </div>
+        <div class="story-hscroll-item">
+          <p data-i18n="story_p3">Мы создаём одежду для тех, кто живёт активно, работает упорно и не боится вызовов.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wolf-trail reveal"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail1"></div></div>
+<!-- VALUES -->
+<section class="values-section">
+  <div class="container">
+    <div class="values-grid">
+      <div class="value-card gs-reveal"><h4 data-i18n="val1_title">Күш / Сила</h4><p data-i18n="val1_desc">Прочность материалов. Одежда, которая выдерживает любые условия.</p></div>
+      <div class="value-card gs-reveal"><h4 data-i18n="val2_title">Еркіндік / Свобода</h4><p data-i18n="val2_desc">Свобода движения. Эргономичный крой для активной жизни.</p></div>
+      <div class="value-card gs-reveal"><h4 data-i18n="val3_title">Адалдық / Верность</h4><p data-i18n="val3_desc">Верность качеству. Честная цена за надёжный продукт.</p></div>
+      <div class="value-card gs-reveal"><h4 data-i18n="val4_title">Рух / Дух</h4><p data-i18n="val4_desc">Дух степного волка — неукротимая энергия и единство.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE IMMERSION -->
+<section class="lifestyle" id="lifestyle">
+  <!-- Mountains / Outdoor -->
+  <div class="lifestyle-scene" id="ls-mountains">
+    <div class="container">
+      <div class="lifestyle-scene-inner">
+        <div class="lifestyle-svg-wrap gs-reveal">
+          <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sky circle -->
+            <circle cx="400" cy="80" r="30" stroke="#BEC4CC" stroke-width="1" opacity=".3"/>
+            <!-- Mountains background -->
+            <path d="M0 350 L80 180 L120 220 L180 120 L240 200 L300 100 L360 190 L420 140 L500 220 L500 400 L0 400Z" stroke="#9EA4AC" stroke-width="1.5" fill="none" opacity=".2"/>
+            <!-- Mountains foreground -->
+            <path d="M0 380 L60 260 L100 290 L160 200 L220 270 L280 180 L340 250 L400 210 L460 260 L500 240 L500 400 L0 400Z" stroke="#BEC4CC" stroke-width="2" fill="none" opacity=".4"/>
+            <!-- Trail -->
+            <path d="M250 380 Q260 340 270 320 Q290 280 310 260 Q320 240 300 220" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".3" stroke-dasharray="6 4"/>
+            <!-- Hiker figure -->
+            <circle cx="295" cy="208" r="6" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".5"/>
+            <line x1="295" y1="214" x2="295" y2="240" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="295" y1="240" x2="285" y2="260" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="295" y1="240" x2="305" y2="260" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="295" y1="225" x2="280" y2="235" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="295" y1="225" x2="310" y2="218" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <!-- Walking stick -->
+            <line x1="310" y1="218" x2="315" y2="260" stroke="#BEC4CC" stroke-width="1" opacity=".4"/>
+            <!-- Trees -->
+            <line x1="100" y1="290" x2="100" y2="320" stroke="#BEC4CC" stroke-width="1" opacity=".25"/>
+            <path d="M90 300 L100 280 L110 300" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".25"/>
+            <line x1="130" y1="280" x2="130" y2="310" stroke="#BEC4CC" stroke-width="1" opacity=".2"/>
+            <path d="M120 290 L130 270 L140 290" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".2"/>
+            <!-- Birds -->
+            <path d="M350 100 Q355 95 360 100" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".3"/>
+            <path d="M370 110 Q375 105 380 110" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="lifestyle-text-wrap">
+          <div class="lifestyle-big-text gs-reveal" data-i18n="ls_mountains_big">В ГОРАХ</div>
+          <div class="lifestyle-label gs-reveal" data-i18n="ls_mountains_label">OUTDOOR</div>
+          <p class="lifestyle-desc gs-reveal" data-i18n="ls_mountains_desc">Где тропы уходят за облака — там BØRI чувствует себя как дома. Одежда для покорения вершин.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- City / Everyday -->
+  <div class="lifestyle-scene" id="ls-city">
+    <div class="container">
+      <div class="lifestyle-scene-inner">
+        <div class="lifestyle-svg-wrap gs-reveal">
+          <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Buildings -->
+            <rect x="40" y="120" width="60" height="250" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+            <rect x="110" y="80" width="50" height="290" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".25"/>
+            <rect x="170" y="150" width="70" height="220" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".35"/>
+            <rect x="260" y="100" width="55" height="270" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+            <rect x="330" y="140" width="65" height="230" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".25"/>
+            <rect x="410" y="170" width="50" height="200" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+            <!-- Windows -->
+            <rect x="55" y="140" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="75" y="140" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="55" y="170" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="75" y="170" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="120" y="100" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="140" y="100" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="120" y="130" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="140" y="130" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="275" y="120" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <rect x="295" y="120" width="10" height="12" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".3"/>
+            <!-- Street line -->
+            <line x1="0" y1="370" x2="500" y2="370" stroke="#BEC4CC" stroke-width="1" opacity=".2"/>
+            <!-- Figure walking -->
+            <circle cx="250" cy="340" r="7" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".5"/>
+            <line x1="250" y1="347" x2="250" y2="365" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="250" y1="365" x2="240" y2="380" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="250" y1="365" x2="258" y2="382" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="250" y1="352" x2="238" y2="358" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="250" y1="352" x2="262" y2="356" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <!-- Lamppost -->
+            <line x1="350" y1="300" x2="350" y2="370" stroke="#BEC4CC" stroke-width="1" opacity=".25"/>
+            <path d="M340 300 Q350 290 360 300" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="lifestyle-text-wrap">
+          <div class="lifestyle-big-text gs-reveal" data-i18n="ls_city_big">КАЖДЫЙ ДЕНЬ</div>
+          <div class="lifestyle-label gs-reveal" data-i18n="ls_city_label">DAILY WEAR</div>
+          <p class="lifestyle-desc gs-reveal" data-i18n="ls_city_desc">Городской ритм требует универсальности. BØRI — одежда, которая не подведёт ни в офисе, ни на прогулке.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training / Sport -->
+  <div class="lifestyle-scene" id="ls-training">
+    <div class="container">
+      <div class="lifestyle-scene-inner">
+        <div class="lifestyle-svg-wrap gs-reveal">
+          <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gym figure -->
+            <circle cx="250" cy="140" r="12" stroke="#BEC4CC" stroke-width="2" fill="none" opacity=".5"/>
+            <line x1="250" y1="152" x2="250" y2="220" stroke="#BEC4CC" stroke-width="2" opacity=".5"/>
+            <line x1="250" y1="220" x2="230" y2="270" stroke="#BEC4CC" stroke-width="2" opacity=".5"/>
+            <line x1="250" y1="220" x2="270" y2="270" stroke="#BEC4CC" stroke-width="2" opacity=".5"/>
+            <!-- Arms with barbell -->
+            <line x1="250" y1="170" x2="190" y2="185" stroke="#BEC4CC" stroke-width="2" opacity=".5"/>
+            <line x1="250" y1="170" x2="310" y2="185" stroke="#BEC4CC" stroke-width="2" opacity=".5"/>
+            <!-- Barbell -->
+            <line x1="170" y1="185" x2="330" y2="185" stroke="#BEC4CC" stroke-width="2.5" opacity=".4"/>
+            <rect x="165" y="175" width="15" height="20" rx="2" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".4"/>
+            <rect x="320" y="175" width="15" height="20" rx="2" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".4"/>
+            <rect x="155" y="178" width="12" height="14" rx="1" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+            <rect x="333" y="178" width="12" height="14" rx="1" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+            <!-- Motion lines -->
+            <line x1="210" y1="130" x2="190" y2="125" stroke="#9EA4AC" stroke-width="1" opacity=".3"/>
+            <line x1="210" y1="140" x2="185" y2="140" stroke="#9EA4AC" stroke-width="1" opacity=".25"/>
+            <line x1="210" y1="150" x2="190" y2="155" stroke="#9EA4AC" stroke-width="1" opacity=".2"/>
+            <line x1="290" y1="130" x2="310" y2="125" stroke="#9EA4AC" stroke-width="1" opacity=".3"/>
+            <line x1="290" y1="140" x2="315" y2="140" stroke="#9EA4AC" stroke-width="1" opacity=".25"/>
+            <line x1="290" y1="150" x2="310" y2="155" stroke="#9EA4AC" stroke-width="1" opacity=".2"/>
+            <!-- Floor -->
+            <line x1="100" y1="300" x2="400" y2="300" stroke="#BEC4CC" stroke-width="1" opacity=".2"/>
+            <!-- Pulse/heartbeat line -->
+            <path d="M80 340 L150 340 L170 310 L185 360 L200 320 L215 350 L230 340 L420 340" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".3"/>
+          </svg>
+        </div>
+        <div class="lifestyle-text-wrap">
+          <div class="lifestyle-big-text gs-reveal" data-i18n="ls_training_big">НА ТРЕНИРОВКЕ</div>
+          <div class="lifestyle-label gs-reveal" data-i18n="ls_training_label">SPORT</div>
+          <p class="lifestyle-desc gs-reveal" data-i18n="ls_training_desc">Максимальная производительность начинается с правильной экипировки. BØRI Sport — технологии для победы.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Night / Tactical -->
+  <div class="lifestyle-scene" id="ls-tactical">
+    <div class="container">
+      <div class="lifestyle-scene-inner">
+        <div class="lifestyle-svg-wrap gs-reveal">
+          <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Night sky / stars -->
+            <circle cx="100" cy="50" r="1.5" fill="#BEC4CC" opacity=".3"/>
+            <circle cx="200" cy="30" r="1" fill="#BEC4CC" opacity=".25"/>
+            <circle cx="350" cy="60" r="1.5" fill="#BEC4CC" opacity=".35"/>
+            <circle cx="420" cy="40" r="1" fill="#BEC4CC" opacity=".2"/>
+            <circle cx="300" cy="20" r="1.2" fill="#BEC4CC" opacity=".3"/>
+            <circle cx="150" cy="80" r="1" fill="#BEC4CC" opacity=".2"/>
+            <!-- Moon crescent -->
+            <path d="M400 80 A20 20 0 1 1 400 120 A15 15 0 1 0 400 80" stroke="#BEC4CC" stroke-width="1" fill="none" opacity=".3"/>
+            <!-- Terrain hills -->
+            <path d="M0 320 Q80 280 160 310 Q240 340 320 300 Q400 270 500 310 L500 400 L0 400Z" stroke="#9EA4AC" stroke-width="1" fill="none" opacity=".2"/>
+            <!-- Tactical figure -->
+            <circle cx="260" cy="220" r="10" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".5"/>
+            <!-- Helmet line -->
+            <path d="M250 215 Q260 208 270 215" stroke="#BEC4CC" stroke-width="1.5" fill="none" opacity=".4"/>
+            <line x1="260" y1="230" x2="260" y2="280" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="260" y1="280" x2="248" y2="310" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="260" y1="280" x2="272" y2="310" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="260" y1="245" x2="240" y2="260" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <line x1="260" y1="245" x2="290" y2="250" stroke="#BEC4CC" stroke-width="1.5" opacity=".5"/>
+            <!-- Weapon shape -->
+            <line x1="290" y1="250" x2="310" y2="240" stroke="#BEC4CC" stroke-width="1.5" opacity=".4"/>
+            <line x1="310" y1="240" x2="340" y2="238" stroke="#BEC4CC" stroke-width="1" opacity=".3"/>
+            <!-- NVG circles -->
+            <circle cx="254" cy="218" r="4" stroke="#6B7D3A" stroke-width="1" fill="none" opacity=".5"/>
+            <circle cx="266" cy="218" r="4" stroke="#6B7D3A" stroke-width="1" fill="none" opacity=".5"/>
+            <!-- Ground texture -->
+            <path d="M140 330 L160 325 L180 332 L200 326 L220 330" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".15"/>
+            <path d="M300 320 L320 316 L340 322 L360 318" stroke="#9EA4AC" stroke-width=".8" fill="none" opacity=".15"/>
+          </svg>
+        </div>
+        <div class="lifestyle-text-wrap">
+          <div class="lifestyle-big-text gs-reveal" data-i18n="ls_tactical_big">НА МИССИИ</div>
+          <div class="lifestyle-label gs-reveal" data-i18n="ls_tactical_label">TACTICAL</div>
+          <p class="lifestyle-desc gs-reveal" data-i18n="ls_tactical_desc">Когда ставки высоки — снаряжение должно быть безупречным. BØRI Tactical для профессионалов.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WOLF TRAIL 1 -->
+<div class="wolf-trail" id="wolfTrailDiv1"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail1"></div></div>
 
 <!-- TACTICAL -->
 <section class="brand-section section-tactical" id="tactical">
+  <!-- Animated targeting reticle -->
+  <div class="tactical-reticle" id="tacticalReticle">
+    <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150" cy="150" r="140" class="reticle-ring" id="reticleOuter"/>
+      <circle cx="150" cy="150" r="100" class="reticle-ring" id="reticleMiddle"/>
+      <circle cx="150" cy="150" r="60" class="reticle-ring"/>
+      <line x1="150" y1="0" x2="150" y2="80" class="reticle-cross"/>
+      <line x1="150" y1="220" x2="150" y2="300" class="reticle-cross"/>
+      <line x1="0" y1="150" x2="80" y2="150" class="reticle-cross"/>
+      <line x1="220" y1="150" x2="300" y2="150" class="reticle-cross"/>
+      <!-- Tick marks -->
+      <line x1="150" y1="85" x2="150" y2="95" stroke="#6B7D3A" stroke-width=".5" opacity=".3"/>
+      <line x1="150" y1="205" x2="150" y2="215" stroke="#6B7D3A" stroke-width=".5" opacity=".3"/>
+      <line x1="85" y1="150" x2="95" y2="150" stroke="#6B7D3A" stroke-width=".5" opacity=".3"/>
+      <line x1="205" y1="150" x2="215" y2="150" stroke="#6B7D3A" stroke-width=".5" opacity=".3"/>
+    </svg>
+  </div>
   <div class="brand-icon tactical-icon">
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="60" cy="60" r="45" class="crosshair-ring"/>
@@ -371,20 +575,21 @@ nav.scrolled .nav-glass {
     </svg>
   </div>
   <div class="container">
-    <div class="brand-section-label reveal">01 &mdash; Tactical Division</div>
-    <div class="brand-section-name glitch reveal">BØRI <span class="accent">TACTICAL</span></div>
-    <div class="tactical-line"></div>
-    <div class="brand-section-tagline reveal" style="color:var(--tactical-light)" data-i18n="tac_tagline">Tactical tagline</div>
-    <div class="brand-section-desc reveal" data-i18n="tac_desc">Tactical desc</div>
+    <div class="brand-section-label gs-reveal">01 &mdash; Tactical Division</div>
+    <div class="brand-section-name glitch gs-reveal">BØRI <span class="accent">TACTICAL</span></div>
+    <div class="tactical-line" id="tacticalLine"></div>
+    <div class="brand-section-tagline gs-reveal" style="color:var(--tactical-light)" data-i18n="tac_tagline">Готов к любой миссии</div>
+    <div class="brand-section-desc gs-reveal" data-i18n="tac_desc">Профессиональная тактическая одежда и снаряжение. Функциональность без компромиссов — для сотрудников силовых структур и любителей тактического стиля.</div>
   </div>
 </section>
 
-<div class="wolf-trail reveal"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail2"></div></div>
+<!-- WOLF TRAIL 2 -->
+<div class="wolf-trail" id="wolfTrailDiv2"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail2"></div></div>
 
 <!-- WORKWEAR -->
 <section class="brand-section section-workwear" id="workwear">
-  <div class="industrial-corner corner-tl"></div><div class="industrial-corner corner-tr"></div>
-  <div class="industrial-corner corner-bl"></div><div class="industrial-corner corner-br"></div>
+  <div class="industrial-corner corner-tl" id="cornerTL"></div><div class="industrial-corner corner-tr" id="cornerTR"></div>
+  <div class="industrial-corner corner-bl" id="cornerBL"></div><div class="industrial-corner corner-br" id="cornerBR"></div>
   <div class="brand-icon workwear-icon">
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M60 10 L70 25 L85 20 L80 35 L95 40 L82 50 L95 60 L80 65 L85 80 L70 75 L60 90 L50 75 L35 80 L40 65 L25 60 L38 50 L25 40 L40 35 L35 20 L50 25 Z" class="gear-outer"/>
@@ -393,21 +598,22 @@ nav.scrolled .nav-glass {
     </svg>
   </div>
   <div class="container">
-    <div class="brand-section-label reveal">02 &mdash; Workwear Division</div>
-    <div class="brand-section-name stamp reveal">BØRI <span class="accent">WORKWEAR</span></div>
-    <div class="workwear-bar"></div>
-    <div class="brand-section-tagline reveal" style="color:var(--workwear-light)" data-i18n="work_tagline">Workwear tagline</div>
-    <div class="brand-section-desc reveal" data-i18n="work_desc">Workwear desc</div>
+    <div class="brand-section-label gs-reveal">02 &mdash; Workwear Division</div>
+    <div class="brand-section-name stamp gs-reveal" id="workwearStamp">BØRI <span class="accent">WORKWEAR</span></div>
+    <div class="workwear-bar" id="workwearBar"></div>
+    <div class="brand-section-tagline gs-reveal" style="color:var(--workwear-light)" data-i18n="work_tagline">Одежда, которая работает</div>
+    <div class="brand-section-desc gs-reveal" data-i18n="work_desc">Современная спецодежда, соответствующая стандартам безопасности. Комфорт и защита на рабочем месте.</div>
   </div>
 </section>
 
-<div class="wolf-trail reveal"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail3"></div></div>
+<!-- WOLF TRAIL 3 -->
+<div class="wolf-trail" id="wolfTrailDiv3"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail3"></div></div>
 
 <!-- OUTDOOR -->
 <section class="brand-section section-outdoor" id="outdoor">
   <canvas id="outdoor-canvas"></canvas>
   <div class="fog fog-top"></div><div class="fog fog-mid"></div><div class="fog fog-bottom"></div>
-  <svg class="mountain-svg" viewBox="0 0 1200 200" preserveAspectRatio="none">
+  <svg class="mountain-svg" id="mountainSvg" viewBox="0 0 1200 200" preserveAspectRatio="none">
     <path d="M0 200 L100 120 L200 160 L350 60 L450 130 L550 40 L650 110 L750 80 L850 140 L950 50 L1050 100 L1150 70 L1200 120 L1200 200 Z"/>
   </svg>
   <div class="brand-icon outdoor-icon">
@@ -415,33 +621,34 @@ nav.scrolled .nav-glass {
       <circle cx="60" cy="60" r="50" class="compass-ring"/>
       <circle cx="60" cy="60" r="40" class="compass-ring"/>
       <circle cx="60" cy="60" r="3" fill="var(--outdoor-light)" opacity=".4"/>
-      <polygon points="60,15 55,55 60,50 65,55" class="compass-needle"/>
+      <polygon points="60,15 55,55 60,50 65,55" class="compass-needle" id="compassNeedle"/>
       <polygon points="60,105 55,65 60,70 65,65" fill="var(--outdoor)" opacity=".25"/>
       <text x="60" y="12" text-anchor="middle" fill="var(--outdoor-light)" font-size="7" font-family="var(--font-primary)" opacity=".4">N</text>
       <text x="60" y="118" text-anchor="middle" fill="var(--outdoor-light)" font-size="7" font-family="var(--font-primary)" opacity=".3">S</text>
     </svg>
   </div>
   <div class="container">
-    <div class="brand-section-label reveal">03 &mdash; Outdoor Division</div>
-    <div class="brand-section-name wind-text reveal">
+    <div class="brand-section-label gs-reveal">03 &mdash; Outdoor Division</div>
+    <div class="brand-section-name wind-text gs-reveal" id="windText">
       <span>B</span><span>&Oslash;</span><span>R</span><span>I</span><span>&nbsp;</span>
       <span class="accent">O</span><span class="accent">U</span><span class="accent">T</span><span class="accent">D</span><span class="accent">O</span><span class="accent">O</span><span class="accent">R</span>
     </div>
-    <div class="brand-section-tagline reveal" style="color:var(--outdoor-light)" data-i18n="out_tagline">Outdoor tagline</div>
-    <div class="brand-section-desc reveal" data-i18n="out_desc">Outdoor desc</div>
+    <div class="brand-section-tagline gs-reveal" style="color:var(--outdoor-light)" data-i18n="out_tagline">За пределами привычного</div>
+    <div class="brand-section-desc gs-reveal" data-i18n="out_desc">Функциональная одежда для активного отдыха и путешествий. Технологичные материалы и продуманный дизайн.</div>
   </div>
 </section>
 
-<div class="wolf-trail reveal"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail4"></div></div>
+<!-- WOLF TRAIL 4 -->
+<div class="wolf-trail" id="wolfTrailDiv4"><div class="wolf-trail-line"></div><div class="wolf-trail-tracks" id="trail4"></div></div>
 
 <!-- SPORT -->
 <section class="brand-section section-sport" id="sport">
-  <div class="speed-lines">
-    <div class="speed-line" style="top:20%;width:60%"></div><div class="speed-line" style="top:35%;width:80%;animation-delay:.15s"></div>
-    <div class="speed-line" style="top:50%;width:50%;animation-delay:.3s"></div><div class="speed-line" style="top:65%;width:70%;animation-delay:.1s"></div>
-    <div class="speed-line" style="top:80%;width:55%;animation-delay:.25s"></div>
+  <div class="speed-lines" id="speedLines">
+    <div class="speed-line" style="top:20%;width:60%"></div><div class="speed-line" style="top:35%;width:80%"></div>
+    <div class="speed-line" style="top:50%;width:50%"></div><div class="speed-line" style="top:65%;width:70%"></div>
+    <div class="speed-line" style="top:80%;width:55%"></div>
   </div>
-  <div class="pulse-rings"><div class="pulse-ring"></div><div class="pulse-ring"></div><div class="pulse-ring"></div></div>
+  <div class="pulse-rings" id="pulseRings"><div class="pulse-ring"></div><div class="pulse-ring"></div><div class="pulse-ring"></div></div>
   <div class="brand-icon sport-icon">
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M65 10 L45 55 L60 55 L40 110 L80 50 L62 50 L80 10 Z" class="bolt"/>
@@ -449,13 +656,17 @@ nav.scrolled .nav-glass {
     </svg>
   </div>
   <div class="container">
-    <div class="brand-section-label reveal">04 &mdash; Sport Division</div>
-    <div class="brand-section-name reveal">BØRI <span class="accent">SPORT</span></div>
-    <div class="brand-section-tagline reveal" style="color:var(--sport-light)" data-i18n="sport_tagline">Sport tagline</div>
-    <div class="brand-section-desc reveal" data-i18n="sport_desc">Sport desc</div>
+    <div class="brand-section-label gs-reveal">04 &mdash; Sport Division</div>
+    <div class="brand-section-name gs-reveal">BØRI <span class="accent">SPORT</span></div>
+    <div class="brand-section-tagline gs-reveal" style="color:var(--sport-light)" data-i18n="sport_tagline">Движение — это жизнь</div>
+    <div class="brand-section-desc gs-reveal" data-i18n="sport_desc">Спортивная одежда с современным дизайном и техническими тканями для тренировок и активного образа жизни.</div>
+    <div class="stats-row gs-reveal">
+      <div><div class="stat-number" data-count="100">0</div><div class="stat-label" data-i18n="stat1">% Качество</div></div>
+      <div><div class="stat-number" data-count="4">0</div><div class="stat-label" data-i18n="stat2">Направления</div></div>
+      <div><div class="stat-number" data-count="3000">0</div><div class="stat-label" data-i18n="stat3">м&sup2; производство</div></div>
+    </div>
   </div>
 </section>
-
 
 <!-- FOOTER with FULL LOGO -->
 <footer class="footer">
@@ -466,7 +677,7 @@ nav.scrolled .nav-glass {
       </svg>
     </div>
     <div class="footer-brand">BØRI</div>
-    <div class="footer-tagline" data-i18n="hero_tagline">Spirit of the Steppe</div>
+    <div class="footer-tagline" data-i18n="hero_tagline">Дух Степи</div>
     <div class="footer-links">
       <a href="#">Instagram</a><a href="#">Telegram</a><a href="#">WhatsApp</a>
     </div>
@@ -474,8 +685,35 @@ nav.scrolled .nav-glass {
   </div>
 </footer>
 
+<!-- CDN: Lenis smooth scroll -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<!-- CDN: GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 <script>
-// ═══════ I18N ═══════
+// ═══════════════════════════════════════════
+// LENIS SMOOTH SCROLL
+// ═══════════════════════════════════════════
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  touchMultiplier: 2,
+});
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Connect Lenis to GSAP ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+
+// ═══════════════════════════════════════════
+// I18N
+// ═══════════════════════════════════════════
 const LANG = {
   ru: {
     nav_story:'История', hero_tagline:'Дух Степи', hero_cta:'Узнать больше',
@@ -483,8 +721,8 @@ const LANG = {
     story_p1:'Бөрі — волк на казахском языке. Для тюркских народов Великой Степи волк — не просто хищник, а тотемное животное, прародитель, символ несгибаемой воли и свободы.',
     story_p2:'Торговая марка BØRI наследует эту философию. Каждое изделие — воплощение силы, выносливости и верности своим принципам.',
     story_p3:'Мы создаём одежду для тех, кто живёт активно, работает упорно и не боится вызовов.',
-    val1_title:'Kush / Сила', val1_desc:'Прочность материалов. Одежда, которая выдерживает любые условия.',
-    val2_title:'Erkinlik / Свобода', val2_desc:'Свобода движения. Эргономичный крой для активной жизни.',
+    val1_title:'Күш / Сила', val1_desc:'Прочность материалов. Одежда, которая выдерживает любые условия.',
+    val2_title:'Еркіндік / Свобода', val2_desc:'Свобода движения. Эргономичный крой для активной жизни.',
     val3_title:'Адалдық / Верность', val3_desc:'Верность качеству. Честная цена за надёжный продукт.',
     val4_title:'Рух / Дух', val4_desc:'Дух степного волка — неукротимая энергия и единство.',
     tac_tagline:'Готов к любой миссии', tac_desc:'Профессиональная тактическая одежда и снаряжение. Функциональность без компромиссов — для сотрудников силовых структур и любителей тактического стиля.',
@@ -492,7 +730,10 @@ const LANG = {
     out_tagline:'За пределами привычного', out_desc:'Функциональная одежда для активного отдыха и путешествий. Технологичные материалы и продуманный дизайн.',
     sport_tagline:'Движение — это жизнь', sport_desc:'Спортивная одежда с современным дизайном и техническими тканями для тренировок и активного образа жизни.',
     stat1:'% Качество', stat2:'Направления', stat3:'м\u00B2 производство',
-    made_label:'Производство', made_title:'Сделано в Казахстане', made_desc:'Современное производство в Астане, где казахстанские традиции качества встречаются с мировыми стандартами.',
+    ls_mountains_big:'В ГОРАХ', ls_mountains_label:'OUTDOOR', ls_mountains_desc:'Где тропы уходят за облака — там BØRI чувствует себя как дома. Одежда для покорения вершин.',
+    ls_city_big:'КАЖДЫЙ ДЕНЬ', ls_city_label:'DAILY WEAR', ls_city_desc:'Городской ритм требует универсальности. BØRI — одежда, которая не подведёт ни в офисе, ни на прогулке.',
+    ls_training_big:'НА ТРЕНИРОВКЕ', ls_training_label:'SPORT', ls_training_desc:'Максимальная производительность начинается с правильной экипировки. BØRI Sport — технологии для победы.',
+    ls_tactical_big:'НА МИССИИ', ls_tactical_label:'TACTICAL', ls_tactical_desc:'Когда ставки высоки — снаряжение должно быть безупречным. BØRI Tactical для профессионалов.',
   },
   kz: {
     nav_story:'Тарих', hero_tagline:'Дала Рухы', hero_cta:'Толығырақ',
@@ -509,7 +750,10 @@ const LANG = {
     out_tagline:'Әдеттегіден тыс', out_desc:'Белсенді демалыс пен саяхатқа арналған функционалды киім. Технологиялық материалдар мен ойластырылған дизайн.',
     sport_tagline:'Қозғалыс — өмір', sport_desc:'Заманауи дизайндағы және техникалық маталардан жасалған спорт киімі. Жаттығулар мен белсенді өмір салтына арналған.',
     stat1:'% Сапа', stat2:'Бағыт', stat3:'м\u00B2 өндіріс',
-    made_label:'Өндіріс', made_title:'Қазақстанда жасалған', made_desc:'Астанадағы заманауи өндіріс, қазақстандық сапа дәстүрлері әлемдік стандарттармен кездеседі.',
+    ls_mountains_big:'ТАУЛАРДА', ls_mountains_label:'OUTDOOR', ls_mountains_desc:'Жолдар бұлттардан асып кететін жерде — BØRI өз үйіндей. Шыңдарды бағындыруға арналған киім.',
+    ls_city_big:'КҮН САЙЫН', ls_city_label:'КҮНДЕЛІКТІ', ls_city_desc:'Қалалық ырғақ әмбебаптықты талап етеді. BØRI — кеңседе де, серуенде де сенімді киім.',
+    ls_training_big:'ЖАТТЫҒУДА', ls_training_label:'СПОРТ', ls_training_desc:'Максималды өнімділік дұрыс жарақтандырудан басталады. BØRI Sport — жеңіске арналған технологиялар.',
+    ls_tactical_big:'МІНДЕТТЕ', ls_tactical_label:'ТАКТИКАЛЫҚ', ls_tactical_desc:'Ставкалар жоғары болғанда — жарақтандыру мінсіз болуы керек. BØRI Tactical кәсіпқойларға арналған.',
   },
   en: {
     nav_story:'Story', hero_tagline:'Spirit of the Steppe', hero_cta:'Discover',
@@ -526,7 +770,10 @@ const LANG = {
     out_tagline:'Beyond the Ordinary', out_desc:'Functional clothing for outdoor activities and travel. Advanced materials and thoughtful design.',
     sport_tagline:'Movement is Life', sport_desc:'Athletic wear with modern design and technical fabrics for training and active lifestyle.',
     stat1:'% Quality', stat2:'Directions', stat3:'m\u00B2 production',
-    made_label:'Production', made_title:'Made in Kazakhstan', made_desc:'Modern manufacturing in Astana, where Kazakh quality traditions meet world standards.',
+    ls_mountains_big:'IN THE MOUNTAINS', ls_mountains_label:'OUTDOOR', ls_mountains_desc:'Where trails vanish above the clouds — that is where BØRI feels at home. Clothing built to conquer peaks.',
+    ls_city_big:'EVERY DAY', ls_city_label:'DAILY WEAR', ls_city_desc:'Urban rhythm demands versatility. BØRI — clothing that won\'t let you down at the office or on a walk.',
+    ls_training_big:'AT THE GYM', ls_training_label:'SPORT', ls_training_desc:'Peak performance starts with the right gear. BØRI Sport — technology for victory.',
+    ls_tactical_big:'ON A MISSION', ls_tactical_label:'TACTICAL', ls_tactical_desc:'When stakes are high — gear must be flawless. BØRI Tactical for professionals.',
   }
 };
 
@@ -545,17 +792,20 @@ function setLang(lang) {
 document.querySelectorAll('.lang-btn').forEach(b => {
   b.addEventListener('click', () => setLang(b.dataset.lang));
 });
-// Init
 setLang('ru');
 
-// ═══════ HERO REVEAL ═══════
+// ═══════════════════════════════════════════
+// HERO REVEAL
+// ═══════════════════════════════════════════
 setTimeout(() => {
   document.getElementById('heroLogo').classList.add('revealed');
   setTimeout(() => document.getElementById('heroTagline').classList.add('revealed'), 2500);
   setTimeout(() => document.getElementById('heroCta').classList.add('revealed'), 2800);
 }, 300);
 
-// ═══════ WOLF TRACKS ═══════
+// ═══════════════════════════════════════════
+// WOLF TRACKS (Hero bottom)
+// ═══════════════════════════════════════════
 (function initWolfTracks() {
   const container = document.getElementById('wolfTracks');
   const pawSvg = `<svg viewBox="60 260 270 155" fill="none"><path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="4"/></svg>`;
@@ -573,86 +823,378 @@ setTimeout(() => {
   }
 })();
 
-// ═══════ WOLF TRAILS between sections ═══════
+// ═══════════════════════════════════════════
+// WOLF TRAILS between sections
+// ═══════════════════════════════════════════
 (function initWolfTrails(){
   const pawSvg = `<svg viewBox="60 260 270 155" fill="none"><path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/></svg>`;
   ['trail1','trail2','trail3','trail4'].forEach(id => {
     const c = document.getElementById(id);
     if(!c) return;
     for(let i=0;i<8;i++){
-      const p=document.createElement('div');
-      p.className='wolf-trail-paw';
-      p.innerHTML=pawSvg;
-      p.style.animationDelay=i*.15+'s';
+      const p = document.createElement('div');
+      p.className = 'wolf-trail-paw';
+      p.innerHTML = pawSvg;
       c.appendChild(p);
     }
   });
 })();
 
-// ═══════ SCROLL REVEAL ═══════
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); const s = e.target.closest('.brand-section'); if(s) activateSection(s); }});
-}, {threshold:.15, rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+// ═══════════════════════════════════════════
+// NAV scroll
+// ═══════════════════════════════════════════
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
 
-const sectionObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) activateSection(e.target); });
-}, {threshold:.3});
-document.querySelectorAll('.brand-section').forEach(s => sectionObs.observe(s));
+// Smooth scroll for anchors (via Lenis)
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) lenis.scrollTo(t, { offset: 0, duration: 1.5 });
+  });
+});
 
-function activateSection(section) {
-  if(section.dataset.activated) return;
-  section.dataset.activated='true';
-  const icon = section.querySelector('.brand-icon');
-  if(icon) setTimeout(()=> icon.classList.add('visible'), 600);
-
-  if(section.classList.contains('section-tactical')) {
-    const g=section.querySelector('.glitch'), l=section.querySelector('.tactical-line');
-    setTimeout(()=>{if(g)g.classList.add('active');},300);
-    setTimeout(()=>{if(l)l.classList.add('visible');},800);
-  }
-  if(section.classList.contains('section-workwear')) {
-    const s=section.querySelector('.stamp'), b=section.querySelector('.workwear-bar');
-    const corners=section.querySelectorAll('.industrial-corner');
-    setTimeout(()=>{if(s)s.classList.add('active');},200);
-    setTimeout(()=>{if(b)b.classList.add('visible');},600);
-    corners.forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),400+i*150));
-  }
-  if(section.classList.contains('section-outdoor')) {
-    const w=section.querySelector('.wind-text'), m=section.querySelector('.mountain-svg');
-    if(w){w.classList.add('active');w.querySelectorAll('span').forEach((s,i)=>{s.style.transitionDelay=i*.08+'s';});}
-    setTimeout(()=>{if(m)m.classList.add('visible');},500);
-    initOutdoorParticles();
-  }
-  if(section.classList.contains('section-sport')) {
-    const l=section.querySelector('.speed-lines'), r=section.querySelector('.pulse-rings');
-    setTimeout(()=>{if(l)l.classList.add('active');},200);
-    setTimeout(()=>{if(r)r.classList.add('visible');},500);
-    section.querySelectorAll('.stat-number').forEach(el=>{animateCount(el,parseInt(el.dataset.count),2000);});
-  }
-}
-function animateCount(el,target,dur){const s=performance.now();const u=n=>{const p=Math.min((n-s)/dur,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(u);};requestAnimationFrame(u);}
-
-// ═══════ NAV ═══════
-window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);});
-document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
-
-// ═══════ HERO PARTICLES ═══════
+// ═══════════════════════════════════════════
+// HERO PARTICLES
+// ═══════════════════════════════════════════
 (function(){
-  const c=document.getElementById('hero-particles');if(!c)return;const x=c.getContext('2d');let w,h,ps=[];
-  function rs(){w=c.width=c.parentElement.offsetWidth;h=c.height=c.parentElement.offsetHeight;}rs();window.addEventListener('resize',rs);
-  for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.3,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.2,o:Math.random()*.4+.1});
-  function d(){x.clearRect(0,0,w,h);ps.forEach(p=>{x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(168,176,184,${p.o})`;x.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>w)p.dx*=-1;if(p.y<0||p.y>h)p.dy*=-1;});requestAnimationFrame(d);}d();
+  const c = document.getElementById('hero-particles'); if(!c) return;
+  const x = c.getContext('2d'); let w, h, ps = [];
+  function rs(){ w = c.width = c.parentElement.offsetWidth; h = c.height = c.parentElement.offsetHeight; } rs();
+  window.addEventListener('resize', rs);
+  for(let i=0;i<60;i++) ps.push({x:Math.random()*2000,y:Math.random()*2000,r:Math.random()*1.5+.3,dx:(Math.random()-.5)*.3,dy:(Math.random()-.5)*.2,o:Math.random()*.4+.1});
+  function d(){
+    x.clearRect(0,0,w,h);
+    ps.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if(p.x<0) p.x = w; if(p.x>w) p.x = 0;
+      if(p.y<0) p.y = h; if(p.y>h) p.y = 0;
+      x.beginPath(); x.arc(p.x,p.y,p.r,0,Math.PI*2);
+      x.fillStyle = `rgba(168,176,184,${p.o})`; x.fill();
+    });
+    requestAnimationFrame(d);
+  } d();
 })();
 
-// ═══════ OUTDOOR PARTICLES ═══════
+// ═══════════════════════════════════════════
+// OUTDOOR PARTICLES (Snow)
+// ═══════════════════════════════════════════
+let outdoorInited = false;
 function initOutdoorParticles(){
-  const c=document.getElementById('outdoor-canvas');if(!c||c.dataset.init)return;c.dataset.init='1';
-  const x=c.getContext('2d'),s=c.parentElement;let w,h,ps=[];
-  function rs(){w=c.width=s.offsetWidth;h=c.height=s.offsetHeight;}rs();window.addEventListener('resize',rs);
-  for(let i=0;i<80;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.3,dx:Math.random()*1.5+.5,dy:Math.random()*.5-.1,o:Math.random()*.3+.05});
-  function d(){x.clearRect(0,0,w,h);ps.forEach(p=>{x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(168,176,184,${p.o})`;x.fill();p.x+=p.dx;p.y+=p.dy;if(p.x>w){p.x=-5;p.y=Math.random()*h;}if(p.y<0||p.y>h)p.dy*=-1;});requestAnimationFrame(d);}d();
+  const c = document.getElementById('outdoor-canvas'); if(!c || outdoorInited) return; outdoorInited = true;
+  const x = c.getContext('2d'), s = c.parentElement; let w, h, ps = [];
+  function rs(){ w = c.width = s.offsetWidth; h = c.height = s.offsetHeight; } rs();
+  window.addEventListener('resize', rs);
+  for(let i=0;i<80;i++) ps.push({x:Math.random()*2000,y:Math.random()*2000,r:Math.random()*1.5+.3,dx:Math.random()*1.5+.5,dy:Math.random()*.5-.1,o:Math.random()*.3+.05});
+  function d(){
+    x.clearRect(0,0,w,h);
+    ps.forEach(p => {
+      x.beginPath(); x.arc(p.x,p.y,p.r,0,Math.PI*2);
+      x.fillStyle = `rgba(168,176,184,${p.o})`; x.fill();
+      p.x += p.dx; p.y += p.dy;
+      if(p.x > w){ p.x = -5; p.y = Math.random()*h; }
+      if(p.y<0||p.y>h) p.dy *= -1;
+    });
+    requestAnimationFrame(d);
+  } d();
 }
+
+// ═══════════════════════════════════════════
+// GSAP + SCROLLTRIGGER ANIMATIONS
+// ═══════════════════════════════════════════
+gsap.registerPlugin(ScrollTrigger);
+
+// --- General reveal for all .gs-reveal elements ---
+gsap.utils.toArray('.gs-reveal').forEach(el => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 60, visibility: 'hidden' },
+    {
+      opacity: 1, y: 0, visibility: 'visible',
+      duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      }
+    }
+  );
+});
+
+// --- Story horizontal scroll ---
+const hscroll = document.getElementById('storyHscroll');
+if(hscroll) {
+  const hscrollWrap = hscroll.parentElement;
+  gsap.to(hscroll, {
+    x: () => -(hscroll.scrollWidth - hscrollWrap.offsetWidth),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: hscrollWrap,
+      start: 'top 40%',
+      end: () => '+=' + (hscroll.scrollWidth - hscrollWrap.offsetWidth),
+      scrub: 1,
+      pin: false,
+    }
+  });
+}
+
+// --- Story background logo parallax ---
+const storyBgLogo = document.getElementById('storyBgLogo');
+if(storyBgLogo) {
+  gsap.to(storyBgLogo, {
+    y: -120,
+    rotation: 15,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#story',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1,
+    }
+  });
+}
+
+// --- Value cards stagger ---
+gsap.utils.toArray('.value-card').forEach((card, i) => {
+  gsap.fromTo(card,
+    { opacity: 0, y: 80, scale: 0.9 },
+    {
+      opacity: 1, y: 0, scale: 1,
+      duration: 1,
+      delay: i * 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 88%',
+        toggleActions: 'play none none none',
+      }
+    }
+  );
+});
+
+// --- Lifestyle scenes parallax ---
+gsap.utils.toArray('.lifestyle-scene').forEach(scene => {
+  const svgWrap = scene.querySelector('.lifestyle-svg-wrap');
+  const bigText = scene.querySelector('.lifestyle-big-text');
+  if(svgWrap) {
+    gsap.fromTo(svgWrap, { y: 80 }, {
+      y: -40,
+      ease: 'none',
+      scrollTrigger: { trigger: scene, start: 'top bottom', end: 'bottom top', scrub: 1 }
+    });
+  }
+  if(bigText) {
+    gsap.fromTo(bigText, { x: -60 }, {
+      x: 30,
+      ease: 'none',
+      scrollTrigger: { trigger: scene, start: 'top bottom', end: 'bottom top', scrub: 1 }
+    });
+  }
+});
+
+// --- Wolf trail paw sequential appear ---
+gsap.utils.toArray('.wolf-trail').forEach(trail => {
+  const paws = trail.querySelectorAll('.wolf-trail-paw');
+  paws.forEach((paw, i) => {
+    gsap.to(paw, {
+      opacity: 0.15,
+      scale: 1,
+      rotation: 0,
+      duration: 0.5,
+      delay: i * 0.1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: trail,
+        start: 'top 80%',
+        toggleActions: 'play none none none',
+      }
+    });
+  });
+});
+
+// ═══════════════════════════════════════════
+// BRAND SECTION ACTIVATIONS (GSAP)
+// ═══════════════════════════════════════════
+
+// --- TACTICAL ---
+ScrollTrigger.create({
+  trigger: '#tactical',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    const icon = document.querySelector('#tactical .brand-icon');
+    const glitch = document.querySelector('#tactical .glitch');
+    const line = document.getElementById('tacticalLine');
+    const reticle = document.getElementById('tacticalReticle');
+
+    // Icon fade in
+    gsap.to(icon, { opacity: 1, duration: 1.5, delay: 0.6, ease: 'power2.out' });
+
+    // Crosshair rotation
+    gsap.to('#tactical .crosshair-ring', { rotation: 360, duration: 10, repeat: -1, ease: 'none', transformOrigin: 'center' });
+
+    // Crosshair dot pulse
+    gsap.to('#tactical .crosshair-dot', { attr: { r: 5 }, opacity: 0.7, duration: 1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+    // Glitch effect
+    if(glitch) {
+      gsap.fromTo(glitch,
+        { x: -3, opacity: 0, filter: 'hue-rotate(90deg)' },
+        { x: 0, opacity: 1, filter: 'none', duration: 0.5, delay: 0.3, ease: 'steps(8)' }
+      );
+    }
+
+    // Tactical line
+    if(line) gsap.to(line, { width: 350, duration: 2, delay: 0.8, ease: 'power3.out' });
+
+    // Reticle
+    if(reticle) {
+      gsap.to(reticle, { opacity: 1, duration: 1.5, delay: 1 });
+      gsap.to('#reticleOuter', { rotation: 360, duration: 15, repeat: -1, ease: 'none', transformOrigin: 'center' });
+      gsap.to('#reticleMiddle', { rotation: -360, duration: 20, repeat: -1, ease: 'none', transformOrigin: 'center' });
+    }
+  }
+});
+
+// --- WORKWEAR ---
+ScrollTrigger.create({
+  trigger: '#workwear',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    const icon = document.querySelector('#workwear .brand-icon');
+    const stamp = document.getElementById('workwearStamp');
+    const bar = document.getElementById('workwearBar');
+    const corners = ['cornerTL','cornerTR','cornerBL','cornerBR'];
+
+    gsap.to(icon, { opacity: 1, duration: 1.5, delay: 0.6, ease: 'power2.out' });
+
+    // Gear spin
+    gsap.to('#workwear .gear-outer', { rotation: 360, duration: 12, repeat: -1, ease: 'none', transformOrigin: 'center' });
+
+    // Stamp effect
+    if(stamp) {
+      gsap.fromTo(stamp,
+        { scale: 2, rotation: -5, opacity: 0 },
+        { scale: 1, rotation: 0, opacity: 1, duration: 0.4, delay: 0.2, ease: 'back.out(1.5)' }
+      );
+    }
+
+    // Bar
+    if(bar) gsap.to(bar, { width: 300, duration: 2, delay: 0.6, ease: 'power3.out' });
+
+    // Corners with pulse
+    corners.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if(el) {
+        gsap.to(el, { opacity: 0.2, duration: 0.5, delay: 0.4 + i * 0.15, ease: 'power2.out' });
+        gsap.to(el, { opacity: 0.15, duration: 1.5, repeat: -1, yoyo: true, delay: 1 + i * 0.15, ease: 'sine.inOut' });
+      }
+    });
+  }
+});
+
+// --- OUTDOOR ---
+ScrollTrigger.create({
+  trigger: '#outdoor',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    const icon = document.querySelector('#outdoor .brand-icon');
+    const mtnSvg = document.getElementById('mountainSvg');
+    const windText = document.getElementById('windText');
+
+    gsap.to(icon, { opacity: 1, duration: 1.5, delay: 0.6, ease: 'power2.out' });
+
+    // Compass needle sway
+    gsap.to('#compassNeedle', { rotation: 15, duration: 2, repeat: -1, yoyo: true, ease: 'sine.inOut', transformOrigin: 'center' });
+
+    // Wind text letters fly in
+    if(windText) {
+      const spans = windText.querySelectorAll('span');
+      spans.forEach((s, i) => {
+        gsap.fromTo(s,
+          { opacity: 0, x: 80, filter: 'blur(4px)' },
+          { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6, delay: 0.3 + i * 0.08, ease: 'power3.out' }
+        );
+      });
+    }
+
+    // Mountain stroke draw
+    if(mtnSvg) {
+      gsap.to(mtnSvg.querySelector('path'), { strokeDashoffset: 0, duration: 3, delay: 0.5, ease: 'power2.inOut' });
+    }
+
+    // Init snow particles
+    initOutdoorParticles();
+  }
+});
+
+// --- SPORT ---
+ScrollTrigger.create({
+  trigger: '#sport',
+  start: 'top 60%',
+  once: true,
+  onEnter: () => {
+    const icon = document.querySelector('#sport .brand-icon');
+    const speedLines = document.getElementById('speedLines');
+    const pulseRings = document.getElementById('pulseRings');
+
+    gsap.to(icon, { opacity: 1, duration: 1.5, delay: 0.6, ease: 'power2.out' });
+
+    // Bolt flash
+    gsap.to('#sport .bolt', {
+      opacity: 0.8,
+      filter: 'drop-shadow(0 0 15px rgba(75,131,255,.5))',
+      duration: 0.15,
+      repeat: -1,
+      repeatDelay: 2.5,
+      yoyo: true,
+      ease: 'power4.in',
+    });
+
+    // Speed lines
+    if(speedLines) {
+      speedLines.querySelectorAll('.speed-line').forEach((line, i) => {
+        gsap.fromTo(line,
+          { left: '-100%', opacity: 0 },
+          { left: '100%', opacity: 0.4, duration: 0.8, delay: 0.2 + i * 0.15, ease: 'power2.in',
+            onComplete: function() { gsap.set(line, { opacity: 0 }); }
+          }
+        );
+      });
+    }
+
+    // Pulse rings
+    if(pulseRings) gsap.to(pulseRings, { opacity: 1, duration: 1, delay: 0.5 });
+
+    // Counter animations
+    document.querySelectorAll('#sport .stat-number').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      gsap.to(el, {
+        innerText: target,
+        duration: 2,
+        delay: 0.5,
+        snap: { innerText: 1 },
+        ease: 'power3.out',
+        onUpdate: function() {
+          el.textContent = Math.round(parseFloat(el.textContent)).toLocaleString();
+        }
+      });
+    });
+  }
+});
+
+// ═══════════════════════════════════════════
+// FOOTER LOGO PARALLAX
+// ═══════════════════════════════════════════
+gsap.fromTo('.footer-logo svg', { y: 40, opacity: 0 }, {
+  y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '.footer', start: 'top 80%', toggleActions: 'play none none none' }
+});
+
 </script>
 </body>
 </html>
