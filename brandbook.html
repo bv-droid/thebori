@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BØRI — Brand Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   BØRI BRAND BOOK — MASTER STYLESHEET
+   ═══════════════════════════════════════════ */
+
+/* --- CSS Custom Properties --- */
+:root {
+  --black: #080808;
+  --gold: #A8B0B8;
+  --gold-light: #C8D0D8;
+  --gold-dark: #8A929A;
+  --white: #F0F2F4;
+
+  --font-brand: 'Oswald', sans-serif;
+  --gray-900: #1A1A1A;
+  --gray-800: #2A2A2A;
+  --gray-700: #3A3A3A;
+  --gray-400: #888;
+  --gray-300: #AAA;
+
+  /* Sub-brand accent colors */
+  --tactical: #4A5D23;
+  --tactical-light: #6B7D3A;
+  --workwear: #D46A1A;
+  --workwear-light: #E8883A;
+  --outdoor: #6B7B8D;
+  --outdoor-light: #8B9BAD;
+  --sport: #2563EB;
+  --sport-light: #4B83FF;
+
+  --font-primary: 'Montserrat', sans-serif;
+  --font-accent: 'Bebas Neue', sans-serif;
+  --section-padding: clamp(60px, 10vw, 120px);
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-primary);
+  background: var(--black);
+  color: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Utility --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); }
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: var(--font-accent);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+}
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--gray-300);
+  max-width: 600px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+.gold-divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold), transparent);
+  margin: 2rem 0;
+}
+
+/* --- Scroll Reveal Animation --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 0: NAVIGATION
+   ═══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.2rem 0;
+  transition: background 0.4s, backdrop-filter 0.4s;
+}
+nav.scrolled {
+  background: rgba(8, 8, 8, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(168, 176, 184, 0.15);
+}
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-logo {
+  font-family: var(--font-brand);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--gray-400);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 1: HERO / COVER
+   ═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(168, 176, 184, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(168, 176, 184, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(200, 208, 216, 0.03) 0%, transparent 70%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, transparent 85%, var(--black) 100%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+.hero-logo {
+  width: clamp(180px, 30vw, 320px);
+  margin: 0 auto 3rem;
+  animation: logoReveal 2s ease forwards;
+  opacity: 0;
+}
+.hero-logo svg {
+  width: 100%; height: auto;
+  filter: drop-shadow(0 0 30px rgba(168, 176, 184, 0.15));
+}
+@keyframes logoReveal {
+  0% { opacity: 0; transform: scale(0.85); filter: blur(12px) drop-shadow(0 0 0 transparent); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0) drop-shadow(0 0 30px rgba(168, 176, 184, 0.15)); }
+}
+.hero-brand {
+  font-family: var(--font-brand);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  background: linear-gradient(180deg, #E0E4E8 0%, #A8B0B8 40%, #8A929A 70%, #C8D0D8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  animation: textReveal 1.5s ease 0.5s forwards;
+  opacity: 0;
+}
+@keyframes textReveal {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.hero-tagline {
+  font-family: var(--font-primary);
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  font-weight: 300;
+  font-style: normal;
+  color: var(--gray-300);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  animation: textReveal 1.5s ease 1s forwards;
+  opacity: 0;
+}
+.hero-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-top: 3rem;
+  animation: textReveal 1.5s ease 1.3s forwards;
+  opacity: 0;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite 2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+.hero-scroll::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold-light), transparent);
+}
+@keyframes bounce {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(10px); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 2: BRAND STORY
+   ═══════════════════════════════════════════ */
+.brand-story { padding: var(--section-padding) 0; }
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .story-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+.story-text p {
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  color: var(--gray-300);
+}
+.story-text p:first-child::first-letter {
+  font-family: var(--font-accent);
+  font-size: 4rem;
+  float: left;
+  line-height: 1;
+  margin-right: 0.5rem;
+  color: var(--gold);
+  font-weight: 700;
+}
+.story-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.value-card {
+  border: 1px solid rgba(168, 176, 184, 0.2);
+  padding: 1.5rem;
+  background: rgba(168, 176, 184, 0.03);
+  transition: border-color 0.3s, background 0.3s;
+}
+.value-card:hover {
+  border-color: rgba(168, 176, 184, 0.5);
+  background: rgba(168, 176, 184, 0.06);
+}
+.value-card h4 {
+  font-family: var(--font-accent);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.value-card p {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 3: LOGO GUIDELINES
+   ═══════════════════════════════════════════ */
+.logo-section { padding: var(--section-padding) 0; }
+.logo-showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .logo-showcase { grid-template-columns: 1fr; }
+}
+.logo-variant {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  border: 1px solid rgba(168, 176, 184, 0.15);
+}
+.logo-variant svg { width: 65%; height: auto; }
+.logo-variant.dark { background: var(--black); }
+.logo-variant.light { background: var(--white); }
+.logo-variant.gray { background: var(--gray-800); }
+.logo-variant-label {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+.logo-variant.light .logo-variant-label { color: var(--gray-700); }
+
+/* Clear space */
+.clear-space {
+  margin-top: 3rem;
+  padding: 3rem;
+  border: 1px solid rgba(168, 176, 184, 0.15);
+}
+.clear-space-demo {
+  width: 200px;
+  margin: 2rem auto;
+  position: relative;
+}
+.clear-space-demo svg { width: 100%; height: auto; }
+.clear-space-demo::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  border: 1px dashed rgba(168, 176, 184, 0.4);
+}
+.clear-space h4 {
+  font-family: var(--font-accent);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.clear-space p {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  max-width: 500px;
+}
+
+/* Don'ts grid */
+.donts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .donts-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.dont-item {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(168, 176, 184, 0.1);
+  padding: 1.5rem;
+  position: relative;
+}
+.dont-item::after {
+  content: '✕';
+  position: absolute;
+  top: 0.8rem; right: 0.8rem;
+  color: #C44A4A;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.dont-item svg { width: 60%; height: auto; opacity: 0.6; }
+.dont-label {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: 1rem;
+  letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 4: COLOR PALETTE
+   ═══════════════════════════════════════════ */
+.colors-section { padding: var(--section-padding) 0; }
+.color-group-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin: 3rem 0 1.5rem;
+  font-weight: 600;
+}
+.colors-primary {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 768px) {
+  .colors-primary { grid-template-columns: 1fr; }
+}
+.color-card {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  overflow: hidden;
+}
+.color-swatch {
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+.color-info {
+  padding: 1.2rem;
+}
+.color-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+.color-hex {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+.color-rgb {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  font-family: monospace;
+}
+
+/* Sub-brand colors */
+.colors-sub {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 768px) {
+  .colors-sub { grid-template-columns: repeat(2, 1fr); }
+}
+.sub-color-card {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  overflow: hidden;
+}
+.sub-color-swatch {
+  height: 100px;
+  position: relative;
+}
+.sub-color-swatch .sub-brand-label {
+  position: absolute;
+  bottom: 0.8rem; left: 0.8rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+}
+.sub-color-info {
+  padding: 1rem;
+}
+.sub-color-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.sub-color-hex {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  font-family: monospace;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 5: TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+.typography-section { padding: var(--section-padding) 0; }
+.type-specimen {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+@media (max-width: 768px) {
+  .type-specimen { grid-template-columns: 1fr; }
+}
+.type-family {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  padding: 2.5rem;
+}
+.type-family-name {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.type-sample-primary {
+  font-family: var(--font-primary);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.type-sample-accent {
+  font-family: var(--font-accent);
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.type-alphabet {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  letter-spacing: 0.1em;
+  line-height: 2;
+  margin-top: 1rem;
+}
+.type-weights {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.type-weight-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.type-weight-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gray-400);
+  min-width: 80px;
+  text-transform: uppercase;
+}
+
+/* Hierarchy demo */
+.type-hierarchy {
+  margin-top: 3rem;
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  padding: 2.5rem;
+}
+.type-hierarchy-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(168, 176, 184, 0.06);
+}
+.type-hierarchy-row:last-child { border-bottom: none; }
+.type-hierarchy-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  min-width: 60px;
+}
+.type-hierarchy-size {
+  font-size: 0.65rem;
+  color: var(--gray-400);
+  font-family: monospace;
+  min-width: 70px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 6: SUB-BRANDS
+   ═══════════════════════════════════════════ */
+.subbrands-section { padding: var(--section-padding) 0; }
+.subbrand-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .subbrand-cards { grid-template-columns: 1fr; }
+}
+.subbrand-card {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  overflow: hidden;
+  transition: border-color 0.4s;
+}
+.subbrand-card:hover {
+  border-color: rgba(168, 176, 184, 0.3);
+}
+.subbrand-header {
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.subbrand-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+}
+.subbrand-card.tactical .subbrand-header { background: linear-gradient(135deg, rgba(74,93,35,0.3), transparent); }
+.subbrand-card.workwear .subbrand-header { background: linear-gradient(135deg, rgba(212,106,26,0.3), transparent); }
+.subbrand-card.outdoor .subbrand-header { background: linear-gradient(135deg, rgba(107,123,141,0.3), transparent); }
+.subbrand-card.sport .subbrand-header { background: linear-gradient(135deg, rgba(37,99,235,0.3), transparent); }
+
+.subbrand-name {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.subbrand-name span { color: var(--gold); }
+.subbrand-card.tactical .subbrand-name .sub-word { color: var(--tactical-light); }
+.subbrand-card.workwear .subbrand-name .sub-word { color: var(--workwear-light); }
+.subbrand-card.outdoor .subbrand-name .sub-word { color: var(--outdoor-light); }
+.subbrand-card.sport .subbrand-name .sub-word { color: var(--sport-light); }
+
+.subbrand-tagline {
+  font-family: var(--font-primary);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--gray-300);
+  margin-top: 0.5rem;
+}
+.subbrand-body { padding: 2rem 2.5rem; }
+.subbrand-body h5 {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+}
+.subbrand-body h5:first-child { margin-top: 0; }
+.subbrand-body p {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  line-height: 1.7;
+}
+.subbrand-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.ref-tag {
+  font-size: 0.65rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(168, 176, 184, 0.2);
+  letter-spacing: 0.1em;
+  color: var(--gray-300);
+}
+.subbrand-accent-bar {
+  height: 3px;
+  width: 100%;
+}
+.subbrand-card.tactical .subbrand-accent-bar { background: var(--tactical); }
+.subbrand-card.workwear .subbrand-accent-bar { background: var(--workwear); }
+.subbrand-card.outdoor .subbrand-accent-bar { background: var(--outdoor); }
+.subbrand-card.sport .subbrand-accent-bar { background: var(--sport); }
+
+/* ═══════════════════════════════════════════
+   SECTION 7: PATTERNS & GRAPHICS
+   ═══════════════════════════════════════════ */
+.patterns-section { padding: var(--section-padding) 0; }
+.pattern-demos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .pattern-demos { grid-template-columns: 1fr; }
+}
+.pattern-demo {
+  aspect-ratio: 1;
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.pattern-demo-label {
+  position: absolute;
+  bottom: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+/* Repeating paw pattern */
+.pattern-repeat {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 395 407' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z' stroke='%23A8B0B8' stroke-width='5' opacity='0.15'/%3E%3C/svg%3E");
+  background-size: 80px;
+}
+.pattern-single svg {
+  width: 50%;
+  height: auto;
+  opacity: 0.4;
+}
+.pattern-texture {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(168, 176, 184, 0.05) 2px,
+    rgba(168, 176, 184, 0.05) 4px
+  );
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 8: TONE OF VOICE
+   ═══════════════════════════════════════════ */
+.voice-section { padding: var(--section-padding) 0; }
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .voice-grid { grid-template-columns: 1fr; }
+}
+.voice-card {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  padding: 2.5rem;
+  position: relative;
+}
+.voice-card::before {
+  content: '"';
+  position: absolute;
+  top: 1rem; left: 1.5rem;
+  font-family: var(--font-accent);
+  font-size: 4rem;
+  color: var(--gold);
+  opacity: 0.2;
+  line-height: 1;
+}
+.voice-card h4 {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.voice-card.tactical h4 { color: var(--tactical-light); }
+.voice-card.workwear h4 { color: var(--workwear-light); }
+.voice-card.outdoor h4 { color: var(--outdoor-light); }
+.voice-card.sport h4 { color: var(--sport-light); }
+.voice-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+.voice-keyword {
+  font-size: 0.6rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba(168, 176, 184, 0.15);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray-300);
+}
+.voice-example {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-style: normal;
+  font-weight: 300;
+  color: var(--gray-300);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 9: APPLICATIONS
+   ═══════════════════════════════════════════ */
+.applications-section { padding: var(--section-padding) 0; }
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+@media (max-width: 768px) {
+  .app-grid { grid-template-columns: 1fr; }
+}
+.app-card {
+  border: 1px solid rgba(168, 176, 184, 0.12);
+  overflow: hidden;
+}
+.app-mockup {
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gray-900);
+  position: relative;
+  overflow: hidden;
+}
+/* Label tag mockup */
+.mockup-label {
+  width: 140px;
+  background: var(--black);
+  border: 1px solid var(--gold-light);
+  padding: 1.2rem 1rem;
+  text-align: center;
+  transform: rotate(-5deg);
+}
+.mockup-label svg { width: 50px; height: auto; margin: 0 auto 0.5rem; display: block; }
+.mockup-label .label-brand {
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+.mockup-label .label-sub {
+  font-size: 0.45rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  margin-top: 0.2rem;
+}
+.mockup-label .label-line {
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0.5rem auto;
+  opacity: 0.4;
+}
+.mockup-label .label-info {
+  font-size: 0.4rem;
+  color: var(--gray-400);
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+}
+/* Social mockup */
+.mockup-social {
+  width: 80%;
+  aspect-ratio: 1;
+  background: var(--black);
+  border: 1px solid rgba(168, 176, 184, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.mockup-social svg { width: 60px; height: auto; margin-bottom: 1rem; }
+.mockup-social .social-text {
+  font-family: var(--font-brand);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  font-weight: 700;
+}
+/* Packaging mockup */
+.mockup-packaging {
+  width: 120px;
+  height: 160px;
+  background: var(--black);
+  border: 1px solid var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+  position: relative;
+}
+.mockup-packaging svg { width: 45px; height: auto; margin-bottom: 0.5rem; }
+.mockup-packaging .pkg-brand {
+  font-family: var(--font-brand);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+.mockup-packaging::before {
+  content: '';
+  position: absolute;
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
+  border: 1px solid rgba(168, 176, 184, 0.15);
+}
+.app-info {
+  padding: 1.2rem;
+}
+.app-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.app-desc {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 10: FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  padding: 4rem 0;
+  border-top: 1px solid rgba(168, 176, 184, 0.1);
+  text-align: center;
+}
+.footer-logo svg { width: 60px; height: auto; margin-bottom: 1.5rem; }
+.footer-brand {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  letter-spacing: 0.1em;
+}
+.footer-legal {
+  font-size: 0.6rem;
+  color: var(--gray-700);
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAVIGATION ═══════════ -->
+<nav id="nav">
+  <div class="container">
+    <a href="#" class="nav-logo">BØRI</a>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#logo">Logo</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Type</a></li>
+      <li><a href="#subbrands">Brands</a></li>
+      <li><a href="#voice">Voice</a></li>
+      <li><a href="#applications">Apply</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-logo">
+      <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.98576 156.214L7.98576 145.714L21.4858 149.214L31.9858 145.714L42.9858 141.714H62.4858L79.4858 145.714L99.9858 156.214L109.486 170.214V184.214L104.986 199.714L95.9858 213.214L113.986 223.214L121.986 233.714L127.986 247.214V261.214V272.714L121.986 284.714L113.986 293.214L104.986 299.714L88.4858 312.214L73.9858 318.214L58.4858 323.714L42.9858 327.214H25.9858L7.98576 323.714L2.98576 312.214L15.9858 299.714L21.4858 279.214V184.214L15.9858 175.214L7.98576 166.714L2.98576 156.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M49.9858 179.714L54.4858 167.214L70.9858 169.214L77.4858 179.714V191.214L68.4858 200.714L54.4858 206.214L49.9858 179.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M54.4858 293.214V234.714H67.4858L78.9858 236.714L88.4858 244.714L93.4858 261.214L88.4858 276.714L75.9858 289.214L54.4858 293.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M37.4858 120.214V135.714L53.4858 127.714H60.9858L64.4858 115.214V101.714L68.4858 86.214L53.4858 96.714L44.4858 107.214L37.4858 120.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M146.486 262.214L135.486 252.714L140.986 245.214L132.986 231.714L129.486 224.214L125.486 211.214V198.214L129.486 185.714L135.486 174.714L146.486 166.214L159.486 158.714L171.486 154.714H181.986H190.986L203.486 158.714L211.486 148.714L221.486 158.714L215.986 169.714L221.486 174.714L226.986 185.714L230.486 198.214V211.214L226.986 224.214L221.486 234.214L211.486 245.214L197.986 252.714L181.986 258.214H165.986L151.486 252.714L146.486 262.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M156.986 209.214V220.714L187.986 177.714H177.986H169.986L165.986 181.714L160.986 185.214L156.986 191.214L153.486 200.214L156.986 209.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M168.486 234.214L199.986 193.214L203.486 205.714L199.986 214.214V223.714L190.986 234.214L181.986 237.714L168.486 234.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M234.986 180.714V165.214H253.986H268.486L273.486 161.214H282.486L290.986 158.214H296.986L303.986 161.214L314.486 165.214L319.486 171.714L325.486 180.714L329.986 187.714V198.714L325.486 204.214V210.714L319.486 219.714L314.486 227.214L301.986 229.714L314.486 245.214L334.986 285.714L340.986 294.214L346.486 297.214L359.486 300.214L365.986 302.714H374.486L388.986 300.214L380.986 312.214H376.486L371.986 317.714H365.986H359.486H352.986H346.486H340.986H334.986L325.486 312.214L319.486 307.214L310.986 297.214L303.986 289.714L290.986 273.214V264.714L285.486 256.214L282.486 251.714L278.986 247.714L273.486 245.714L268.486 247.714L270.486 297.214L263.486 294.214L253.986 285.714L245.486 279.214L238.986 268.714L234.986 258.714V251.714L238.986 245.214L242.486 234.714V227.214V219.714V210.714L238.986 198.714V187.714L234.986 180.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M269.986 213.714V183.214L280.986 179.714H288.986L294.486 183.214L297.986 189.714V196.214L294.486 203.714L288.986 209.214L280.986 213.714H269.986Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M352.486 283.214L342.486 278.214L344.986 267.714V257.214V243.214V235.214V223.214V214.214V205.214L342.486 196.214V190.214L348.986 185.714L360.486 190.214H367.486H374.986L379.486 196.214V207.714V218.214V229.214L374.986 243.214V257.214L379.486 271.714L383.986 288.214H374.986H367.486H360.486L352.486 283.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M343.986 166.214V156.714L352.486 145.714H360.986H369.486L373.986 150.714L378.986 156.714L381.986 164.214L378.986 171.714V178.214H369.486H360.986H352.486L343.986 171.714V166.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M352.486 112.714V132.714L365.486 139.214H374.486V132.714V126.214V120.714L368.986 112.714L361.486 103.714L356.486 98.714L343.986 95.214L352.486 112.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+      </svg>
+    </div>
+    <h1 class="hero-brand">BØRI</h1>
+    <p class="hero-tagline">Spirit of the Steppe</p>
+    <p class="hero-sub">Brand Guidelines &mdash; 2026</p>
+  </div>
+  <div class="hero-scroll"></div>
+</section>
+
+<!-- ═══════════ BRAND STORY ═══════════ -->
+<section class="brand-story" id="story">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">01 &mdash; Brand Story</div>
+      <h2 class="section-title">Бөрі. Дух Волка.<br>Сила Степи.</h2>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="story-grid reveal">
+      <div class="story-text">
+        <p>Бөрі — волк на казахском языке. Для тюркских народов Великой Степи волк — не просто хищник, а тотемное животное, прародитель, символ несгибаемой воли и свободы. Легенды гласят, что небесная волчица Бөрте Шоно вела кочевников через бескрайние просторы, защищая их от невзгод и указывая путь.</p>
+        <p>Торговая марка BØRI наследует эту философию. Каждое изделие — это воплощение силы, выносливости и верности своим принципам. Мы создаём одежду для тех, кто живёт активно, работает упорно и не боится вызовов — будь то тактическая миссия, рабочая смена, горный маршрут или спортивная тренировка.</p>
+        <p>Производство расположено в Астане, в Специальной Экономической Зоне — сердце современного Казахстана, где традиции встречаются с инновациями.</p>
+      </div>
+      <div class="story-values">
+        <div class="value-card">
+          <h4>Kush / Сила</h4>
+          <p>Прочность материалов и конструкций. Одежда, которая выдерживает любые условия.</p>
+        </div>
+        <div class="value-card">
+          <h4>Erkinlik / Свобода</h4>
+          <p>Свобода движения и самовыражения. Эргономичный крой для активной жизни.</p>
+        </div>
+        <div class="value-card">
+          <h4>Адалдық / Верность</h4>
+          <p>Верность качеству и своему слову. Честная цена за надёжный продукт.</p>
+        </div>
+        <div class="value-card">
+          <h4>Рух / Дух</h4>
+          <p>Дух степного волка — неукротимая энергия, стремление вперёд, единство стаи.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top: 3rem;">
+      <div class="section-label">Tagline Concepts</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem;">
+        <div class="value-card" style="text-align: center;">
+          <h4 style="font-size: 1.5rem;">"Spirit of the Steppe"</h4>
+          <p>Дух степи — связь с корнями, наследием Великой Степи и кочевой культурой</p>
+        </div>
+        <div class="value-card" style="text-align: center;">
+          <h4 style="font-size: 1.5rem;">"Born to Lead"</h4>
+          <p>Рождён быть лидером — уверенность, сила, лидерские качества волка-вожака</p>
+        </div>
+        <div class="value-card" style="text-align: center;">
+          <h4 style="font-size: 1.5rem;">"Strength in Every Thread"</h4>
+          <p>Сила в каждой нити — фокус на качестве производства и надёжности</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LOGO GUIDELINES ═══════════ -->
+<section class="logo-section" id="logo">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">02 &mdash; Logo</div>
+      <h2 class="section-title">Логотип</h2>
+      <p class="section-subtitle">Знак BØRI сочетает стилизованную волчью лапу с&nbsp;типографикой. Лапа — первичный символ, буквенный знак — вторичный. Вместе они формируют уникальную идентичность бренда.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="logo-showcase reveal">
+      <!-- Primary: Gold on Dark -->
+      <div class="logo-variant dark">
+        <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        </svg>
+        <span class="logo-variant-label">Primary &mdash; Gold on Dark</span>
+      </div>
+
+      <!-- Light version -->
+      <div class="logo-variant light">
+        <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#080808" stroke-width="5"/>
+          <path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#080808" stroke-width="5"/>
+          <path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#080808" stroke-width="5"/>
+          <path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#080808" stroke-width="5"/>
+          <path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#080808" stroke-width="5"/>
+          <path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#080808" stroke-width="5"/>
+          <path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#080808" stroke-width="5"/>
+        </svg>
+        <span class="logo-variant-label">Light Background</span>
+      </div>
+
+      <!-- Monochrome White -->
+      <div class="logo-variant gray">
+        <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#FFFFFF" stroke-width="5"/>
+          <path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#FFFFFF" stroke-width="5"/>
+        </svg>
+        <span class="logo-variant-label">Monochrome White</span>
+      </div>
+    </div>
+
+    <!-- Clear Space -->
+    <div class="clear-space reveal" style="margin-top: 3rem;">
+      <h4>Охранная зона</h4>
+      <p>Минимальное свободное пространство вокруг логотипа равно высоте одного «пальца» лапы. Это обеспечивает читаемость и визуальную чистоту в любом контексте.</p>
+      <div class="clear-space-demo">
+        <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/>
+          <path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Don'ts -->
+    <div class="reveal" style="margin-top: 3rem;">
+      <div class="section-label">Запрещённые использования</div>
+      <div class="donts-grid">
+        <div class="dont-item">
+          <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(15deg);">
+            <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          </svg>
+          <span class="dont-label">Не поворачивать</span>
+        </div>
+        <div class="dont-item">
+          <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
+            <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          </svg>
+          <span class="dont-label">Не зеркалить</span>
+        </div>
+        <div class="dont-item">
+          <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(0.6);">
+            <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+          </svg>
+          <span class="dont-label">Не искажать</span>
+        </div>
+        <div class="dont-item">
+          <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#FF4444" stroke-width="5"/>
+          </svg>
+          <span class="dont-label">Не менять цвет</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ COLOR PALETTE ═══════════ -->
+<section class="colors-section" id="colors">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">03 &mdash; Color Palette</div>
+      <h2 class="section-title">Цветовая палитра</h2>
+      <p class="section-subtitle">Основа — контраст глубокого чёрного и благородного золота. Каждое направление усиливает идентичность собственным акцентным цветом.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="color-group-title reveal">Основные цвета</div>
+    <div class="colors-primary reveal">
+      <div class="color-card">
+        <div class="color-swatch" style="background: #080808;"></div>
+        <div class="color-info">
+          <div class="color-name">Deep Black</div>
+          <div class="color-hex">#080808</div>
+          <div class="color-rgb">RGB 8, 8, 8</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: linear-gradient(135deg, #A8B0B8, #C8D0D8);"></div>
+        <div class="color-info">
+          <div class="color-name">BØRI Platinum</div>
+          <div class="color-hex">#A8B0B8</div>
+          <div class="color-rgb">RGB 168, 176, 184</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #F0F2F4;"></div>
+        <div class="color-info">
+          <div class="color-name" style="color: #080808;">Ice White</div>
+          <div class="color-hex">#F0F2F4</div>
+          <div class="color-rgb">RGB 240, 242, 244</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-group-title reveal">Акценты направлений</div>
+    <div class="colors-sub reveal">
+      <div class="sub-color-card">
+        <div class="sub-color-swatch" style="background: linear-gradient(135deg, #4A5D23, #6B7D3A);">
+          <span class="sub-brand-label">Tactical</span>
+        </div>
+        <div class="sub-color-info">
+          <div class="sub-color-name">Military Olive</div>
+          <div class="sub-color-hex">#4A5D23</div>
+        </div>
+      </div>
+      <div class="sub-color-card">
+        <div class="sub-color-swatch" style="background: linear-gradient(135deg, #D46A1A, #E8883A);">
+          <span class="sub-brand-label">Workwear</span>
+        </div>
+        <div class="sub-color-info">
+          <div class="sub-color-name">Industrial Orange</div>
+          <div class="sub-color-hex">#D46A1A</div>
+        </div>
+      </div>
+      <div class="sub-color-card">
+        <div class="sub-color-swatch" style="background: linear-gradient(135deg, #6B7B8D, #8B9BAD);">
+          <span class="sub-brand-label">Outdoor</span>
+        </div>
+        <div class="sub-color-info">
+          <div class="sub-color-name">Steel Gray</div>
+          <div class="sub-color-hex">#6B7B8D</div>
+        </div>
+      </div>
+      <div class="sub-color-card">
+        <div class="sub-color-swatch" style="background: linear-gradient(135deg, #2563EB, #4B83FF);">
+          <span class="sub-brand-label">Sport</span>
+        </div>
+        <div class="sub-color-info">
+          <div class="sub-color-name">Electric Blue</div>
+          <div class="sub-color-hex">#2563EB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TYPOGRAPHY ═══════════ -->
+<section class="typography-section" id="typography">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">04 &mdash; Typography</div>
+      <h2 class="section-title">Типографика</h2>
+      <p class="section-subtitle">Два шрифта формируют визуальный язык бренда: геометрический Montserrat для основного текста и Bebas Neue для заголовков и акцентов.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="type-specimen reveal">
+      <div class="type-family">
+        <div class="type-family-name">Primary &mdash; Montserrat</div>
+        <div class="type-sample-primary">Aa Бб</div>
+        <div class="type-alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ<br>0123456789 !@#$%&</div>
+        <div class="type-weights">
+          <div class="type-weight-row">
+            <span class="type-weight-label">Light 300</span>
+            <span style="font-weight: 300; font-size: 1.1rem;">Spirit of the Steppe</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Regular 400</span>
+            <span style="font-weight: 400; font-size: 1.1rem;">Spirit of the Steppe</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Semi 600</span>
+            <span style="font-weight: 600; font-size: 1.1rem;">Spirit of the Steppe</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Bold 700</span>
+            <span style="font-weight: 700; font-size: 1.1rem;">Spirit of the Steppe</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Black 900</span>
+            <span style="font-weight: 900; font-size: 1.1rem;">BØRI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="type-family">
+        <div class="type-family-name">Accent &mdash; Bebas Neue</div>
+        <div class="type-sample-accent">BØRI</div>
+        <div class="type-alphabet" style="font-family: var(--font-accent); font-size: 1.2rem; letter-spacing: 0.1em;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ<br>0123456789 !@#$%&</div>
+        <div class="type-weights">
+          <div class="type-weight-row">
+            <span class="type-weight-label">Regular 400</span>
+            <span style="font-family: var(--font-accent); font-weight: 400; font-size: 2rem; letter-spacing: 0.1em;">SPIRIT OF THE STEPPE</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Headlines</span>
+            <span style="font-family: var(--font-accent); font-weight: 400; font-size: 2.5rem; letter-spacing: 0.15em;">BØRI TACTICAL</span>
+          </div>
+          <div class="type-weight-row">
+            <span class="type-weight-label">Display</span>
+            <span style="font-family: var(--font-accent); font-weight: 400; font-size: 3rem; letter-spacing: 0.2em;">BØRI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hierarchy -->
+    <div class="type-hierarchy reveal">
+      <div class="section-label" style="margin-bottom: 1.5rem;">Иерархия текста</div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">H1</span>
+        <span class="type-hierarchy-size">48–56px</span>
+        <span style="font-family: var(--font-accent); font-size: 3rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;">Дух Степи</span>
+      </div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">H2</span>
+        <span class="type-hierarchy-size">32–40px</span>
+        <span style="font-family: var(--font-accent); font-size: 2.2rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;">Сила в каждой нити</span>
+      </div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">H3</span>
+        <span class="type-hierarchy-size">24–28px</span>
+        <span style="font-family: var(--font-primary); font-size: 1.5rem; font-weight: 700;">Tactical Collection</span>
+      </div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">H4</span>
+        <span class="type-hierarchy-size">18–20px</span>
+        <span style="font-family: var(--font-primary); font-size: 1.15rem; font-weight: 600;">Product Features</span>
+      </div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">Body</span>
+        <span class="type-hierarchy-size">16px</span>
+        <span style="font-size: 1rem; font-weight: 300; color: var(--gray-300);">Каждое изделие BØRI создаётся с вниманием к деталям и проверяется на прочность.</span>
+      </div>
+      <div class="type-hierarchy-row">
+        <span class="type-hierarchy-label">Caption</span>
+        <span class="type-hierarchy-size">12px</span>
+        <span style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-400);">Made in Kazakhstan &mdash; Astana SEZ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SUB-BRANDS ═══════════ -->
+<section class="subbrands-section" id="subbrands">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">05 &mdash; Sub-Brands</div>
+      <h2 class="section-title">Четыре направления.<br>Одна философия.</h2>
+      <p class="section-subtitle">Каждое направление BØRI обслуживает свою аудиторию, сохраняя единую ДНК бренда — силу, качество и дух степного волка.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="subbrand-cards reveal">
+      <!-- TACTICAL -->
+      <div class="subbrand-card tactical">
+        <div class="subbrand-accent-bar"></div>
+        <div class="subbrand-header">
+          <div class="subbrand-name"><span>BØRI</span> <span class="sub-word">TACTICAL</span></div>
+          <div class="subbrand-tagline">Готов к любой миссии</div>
+        </div>
+        <div class="subbrand-body">
+          <h5>Целевая аудитория</h5>
+          <p>Сотрудники силовых структур, охранных предприятий, любители тактического снаряжения. Мужчины 25–50 лет.</p>
+          <h5>Позиционирование</h5>
+          <p>Профессиональная тактическая одежда и снаряжение, сочетающие надёжность с доступной ценой. Функциональность без компромиссов.</p>
+          <h5>Референсы</h5>
+          <div class="subbrand-refs">
+            <span class="ref-tag">5.11 Tactical</span>
+            <span class="ref-tag">Propper</span>
+            <span class="ref-tag">Helikon-Tex</span>
+            <span class="ref-tag">Carinthia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKWEAR -->
+      <div class="subbrand-card workwear">
+        <div class="subbrand-accent-bar"></div>
+        <div class="subbrand-header">
+          <div class="subbrand-name"><span>BØRI</span> <span class="sub-word">WORKWEAR</span></div>
+          <div class="subbrand-tagline">Одежда, которая работает</div>
+        </div>
+        <div class="subbrand-body">
+          <h5>Целевая аудитория</h5>
+          <p>Работники промышленных предприятий, строительных компаний, корпоративные закупщики. B2B и B2C сегменты.</p>
+          <h5>Позиционирование</h5>
+          <p>Современная спецодежда, соответствующая стандартам безопасности. Комфорт и защита на рабочем месте.</p>
+          <h5>Референсы</h5>
+          <div class="subbrand-refs">
+            <span class="ref-tag">Red Kap</span>
+            <span class="ref-tag">Fristads</span>
+            <span class="ref-tag">Portwest</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUTDOOR -->
+      <div class="subbrand-card outdoor">
+        <div class="subbrand-accent-bar"></div>
+        <div class="subbrand-header">
+          <div class="subbrand-name"><span>BØRI</span> <span class="sub-word">OUTDOOR</span></div>
+          <div class="subbrand-tagline">За пределами привычного</div>
+        </div>
+        <div class="subbrand-body">
+          <h5>Целевая аудитория</h5>
+          <p>Любители активного отдыха, туристы, путешественники. Мужчины и женщины 20–45 лет, ценящие комфорт на природе.</p>
+          <h5>Позиционирование</h5>
+          <p>Функциональная одежда для активного отдыха и путешествий. Технологичные материалы, продуманный дизайн, адекватная цена.</p>
+          <h5>Референсы</h5>
+          <div class="subbrand-refs">
+            <span class="ref-tag">Arc'teryx</span>
+            <span class="ref-tag">Patagonia</span>
+            <span class="ref-tag">Mammut</span>
+            <span class="ref-tag">Uniqlo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPORT -->
+      <div class="subbrand-card sport">
+        <div class="subbrand-accent-bar"></div>
+        <div class="subbrand-header">
+          <div class="subbrand-name"><span>BØRI</span> <span class="sub-word">SPORT</span></div>
+          <div class="subbrand-tagline">Движение — это жизнь</div>
+        </div>
+        <div class="subbrand-body">
+          <h5>Целевая аудитория</h5>
+          <p>Спортсмены-любители, фитнес-энтузиасты, молодёжь. Мужчины и женщины 18–40 лет, ведущие активный образ жизни.</p>
+          <h5>Позиционирование</h5>
+          <p>Спортивная одежда с современным дизайном и техническими тканями. Стиль и функциональность для тренировок и повседневной жизни.</p>
+          <h5>Референсы</h5>
+          <div class="subbrand-refs">
+            <span class="ref-tag">Under Armour</span>
+            <span class="ref-tag">Nike</span>
+            <span class="ref-tag">Uniqlo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PATTERNS ═══════════ -->
+<section class="patterns-section" id="patterns">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">06 &mdash; Patterns & Graphics</div>
+      <h2 class="section-title">Графические элементы</h2>
+      <p class="section-subtitle">Волчья лапа используется как самостоятельный графический элемент — в паттернах, текстурах и декоративных решениях.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="pattern-demos reveal">
+      <div class="pattern-demo pattern-repeat">
+        <span class="pattern-demo-label">Repeating Pattern</span>
+      </div>
+      <div class="pattern-demo pattern-single" style="background: var(--gray-900);">
+        <svg viewBox="0 0 395 407" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.98576 156.214L7.98576 145.714L21.4858 149.214L31.9858 145.714L42.9858 141.714H62.4858L79.4858 145.714L99.9858 156.214L109.486 170.214V184.214L104.986 199.714L95.9858 213.214L113.986 223.214L121.986 233.714L127.986 247.214V261.214V272.714L121.986 284.714L113.986 293.214L104.986 299.714L88.4858 312.214L73.9858 318.214L58.4858 323.714L42.9858 327.214H25.9858L7.98576 323.714L2.98576 312.214L15.9858 299.714L21.4858 279.214V184.214L15.9858 175.214L7.98576 166.714L2.98576 156.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M49.9858 179.714L54.4858 167.214L70.9858 169.214L77.4858 179.714V191.214L68.4858 200.714L54.4858 206.214L49.9858 179.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M54.4858 293.214V234.714H67.4858L78.9858 236.714L88.4858 244.714L93.4858 261.214L88.4858 276.714L75.9858 289.214L54.4858 293.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M37.4858 120.214V135.714L53.4858 127.714H60.9858L64.4858 115.214V101.714L68.4858 86.214L53.4858 96.714L44.4858 107.214L37.4858 120.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M146.486 262.214L135.486 252.714L140.986 245.214L132.986 231.714L129.486 224.214L125.486 211.214V198.214L129.486 185.714L135.486 174.714L146.486 166.214L159.486 158.714L171.486 154.714H181.986H190.986L203.486 158.714L211.486 148.714L221.486 158.714L215.986 169.714L221.486 174.714L226.986 185.714L230.486 198.214V211.214L226.986 224.214L221.486 234.214L211.486 245.214L197.986 252.714L181.986 258.214H165.986L151.486 252.714L146.486 262.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M156.986 209.214V220.714L187.986 177.714H177.986H169.986L165.986 181.714L160.986 185.214L156.986 191.214L153.486 200.214L156.986 209.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M168.486 234.214L199.986 193.214L203.486 205.714L199.986 214.214V223.714L190.986 234.214L181.986 237.714L168.486 234.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M234.986 180.714V165.214H253.986H268.486L273.486 161.214H282.486L290.986 158.214H296.986L303.986 161.214L314.486 165.214L319.486 171.714L325.486 180.714L329.986 187.714V198.714L325.486 204.214V210.714L319.486 219.714L314.486 227.214L301.986 229.714L314.486 245.214L334.986 285.714L340.986 294.214L346.486 297.214L359.486 300.214L365.986 302.714H374.486L388.986 300.214L380.986 312.214H376.486L371.986 317.714H365.986H359.486H352.986H346.486H340.986H334.986L325.486 312.214L319.486 307.214L310.986 297.214L303.986 289.714L290.986 273.214V264.714L285.486 256.214L282.486 251.714L278.986 247.714L273.486 245.714L268.486 247.714L270.486 297.214L263.486 294.214L253.986 285.714L245.486 279.214L238.986 268.714L234.986 258.714V251.714L238.986 245.214L242.486 234.714V227.214V219.714V210.714L238.986 198.714V187.714L234.986 180.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M269.986 213.714V183.214L280.986 179.714H288.986L294.486 183.214L297.986 189.714V196.214L294.486 203.714L288.986 209.214L280.986 213.714H269.986Z" stroke="#A8B0B8" stroke-width="5"/><path d="M352.486 283.214L342.486 278.214L344.986 267.714V257.214V243.214V235.214V223.214V214.214V205.214L342.486 196.214V190.214L348.986 185.714L360.486 190.214H367.486H374.986L379.486 196.214V207.714V218.214V229.214L374.986 243.214V257.214L379.486 271.714L383.986 288.214H374.986H367.486H360.486L352.486 283.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M343.986 166.214V156.714L352.486 145.714H360.986H369.486L373.986 150.714L378.986 156.714L381.986 164.214L378.986 171.714V178.214H369.486H360.986H352.486L343.986 171.714V166.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M352.486 112.714V132.714L365.486 139.214H374.486V132.714V126.214V120.714L368.986 112.714L361.486 103.714L356.486 98.714L343.986 95.214L352.486 112.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M109.986 107.714L115.486 88.714L124.486 81.714L126.986 77.214L134.986 68.214L143.486 61.714L147.486 57.714H155.986H165.986L170.986 61.714L174.486 68.214V77.214L180.486 88.714V99.714L170.986 126.214L165.986 131.214L160.986 134.214L155.986 137.214L147.486 139.714L143.486 141.714H138.486H134.986L131.986 139.714H126.986L124.486 137.214L120.486 134.214L115.486 131.214V126.214L109.986 119.214V107.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M226.986 125.214L221.986 113.214V101.714L226.986 89.714V80.714L230.986 68.214L235.986 62.214L243.486 58.714H250.486L260.986 62.214L269.486 68.214L274.986 80.714L278.986 89.714L283.986 97.214V107.714V117.714L278.986 125.214L274.986 136.214L269.486 142.714H260.986H250.486L239.986 136.214L235.986 131.214H230.986L226.986 125.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M113.986 141.714L121.986 148.214L129.986 151.714H140.486L152.986 148.214L158.986 144.214L169.986 136.214H176.986L181.486 128.214V120.714L185.486 110.714L188.986 102.214L190.986 92.714L185.486 82.214L181.486 70.714V64.214L176.986 55.214L169.986 52.214L161.486 49.214H152.986H146.486L140.486 52.214L134.486 55.214L129.986 58.714L125.986 64.214L121.986 70.714L113.986 78.214L107.986 82.214L103.486 86.714V92.714L98.9858 99.714V105.714V114.214L103.486 120.714V128.214L107.986 136.214L113.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M155.486 39.714H144.986L150.986 27.714L155.486 19.214L161.986 13.714L169.486 10.714L176.986 5.714L173.486 19.214L169.486 27.714V43.214H164.486L155.486 39.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M225.986 141.714L218.486 137.714L214.986 119.714L210.986 112.714L214.986 105.214V93.714L218.486 84.214V71.714L221.986 61.214L232.486 52.714H244.986H256.986L270.986 57.214L278.486 65.214V75.214L285.486 84.214L289.486 93.714L292.986 105.214L298.486 119.714L292.986 131.214L285.486 141.714L278.486 145.714L270.986 149.214H261.986H252.986H244.986L238.986 145.714H232.486L225.986 141.714Z" stroke="#A8B0B8" stroke-width="5"/><path d="M243.486 42.214L233.986 45.714V27.714V17.214L230.486 6.214L239.986 11.214L246.986 17.214L252.986 27.714L260.486 45.714H252.986L243.486 42.214Z" stroke="#A8B0B8" stroke-width="5"/><path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="5"/>
+        </svg>
+        <span class="pattern-demo-label">Icon Element</span>
+      </div>
+      <div class="pattern-demo pattern-texture">
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-brand); font-weight: 700; font-size: 2.5rem; letter-spacing: 0.3em; color: var(--gold); opacity: 0.6;">BØRI</div>
+          <div style="font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gray-400); margin-top: 0.5rem;">Diagonal Texture</div>
+        </div>
+        <span class="pattern-demo-label">Brand Texture</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TONE OF VOICE ═══════════ -->
+<section class="voice-section" id="voice">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">07 &mdash; Tone of Voice</div>
+      <h2 class="section-title">Голос бренда</h2>
+      <p class="section-subtitle">Единый характер — разные интонации. Каждое направление говорит на языке своей аудитории, сохраняя ДНК BØRI.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="voice-grid reveal">
+      <div class="voice-card tactical">
+        <h4>BØRI Tactical</h4>
+        <div class="voice-keywords">
+          <span class="voice-keyword">Чёткий</span>
+          <span class="voice-keyword">Уверенный</span>
+          <span class="voice-keyword">Профессиональный</span>
+        </div>
+        <p class="voice-example">Твоя экипировка должна работать так же безотказно, как и ты. BØRI Tactical — проверено на практике.</p>
+      </div>
+
+      <div class="voice-card workwear">
+        <h4>BØRI Workwear</h4>
+        <div class="voice-keywords">
+          <span class="voice-keyword">Надёжный</span>
+          <span class="voice-keyword">Практичный</span>
+          <span class="voice-keyword">Честный</span>
+        </div>
+        <p class="voice-example">Одежда, которая выдерживает рабочий день от звонка до звонка. Потому что ваш труд заслуживает лучшего.</p>
+      </div>
+
+      <div class="voice-card outdoor">
+        <h4>BØRI Outdoor</h4>
+        <div class="voice-keywords">
+          <span class="voice-keyword">Вдохновляющий</span>
+          <span class="voice-keyword">Свободный</span>
+          <span class="voice-keyword">Естественный</span>
+        </div>
+        <p class="voice-example">Степь не знает границ. И ты — тоже. Одевайся для приключений, которые ждут за горизонтом.</p>
+      </div>
+
+      <div class="voice-card sport">
+        <h4>BØRI Sport</h4>
+        <div class="voice-keywords">
+          <span class="voice-keyword">Энергичный</span>
+          <span class="voice-keyword">Динамичный</span>
+          <span class="voice-keyword">Мотивирующий</span>
+        </div>
+        <p class="voice-example">Каждая тренировка — шаг к лучшей версии себя. BØRI Sport двигается вместе с тобой.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ APPLICATIONS ═══════════ -->
+<section class="applications-section" id="applications">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">08 &mdash; Applications</div>
+      <h2 class="section-title">Применение</h2>
+      <p class="section-subtitle">Примеры использования фирменного стиля на физических и цифровых носителях.</p>
+      <div class="gold-divider"></div>
+    </div>
+
+    <div class="app-grid reveal">
+      <!-- Label -->
+      <div class="app-card">
+        <div class="app-mockup">
+          <div class="mockup-label">
+            <svg viewBox="60 260 270 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="3"/>
+            </svg>
+            <div class="label-brand">BØRI</div>
+            <div class="label-sub">Tactical</div>
+            <div class="label-line"></div>
+            <div class="label-info">100% Cotton<br>Made in Kazakhstan</div>
+          </div>
+        </div>
+        <div class="app-info">
+          <div class="app-title">Бирка / Этикетка</div>
+          <div class="app-desc">Вшивная бирка с логотипом и информацией о составе</div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="app-card">
+        <div class="app-mockup">
+          <div class="mockup-social">
+            <svg viewBox="60 260 270 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="3"/>
+            </svg>
+            <div class="social-text">BØRI</div>
+          </div>
+        </div>
+        <div class="app-info">
+          <div class="app-title">Social Media</div>
+          <div class="app-desc">Аватар и брендированный контент для соцсетей</div>
+        </div>
+      </div>
+
+      <!-- Packaging -->
+      <div class="app-card">
+        <div class="app-mockup">
+          <div class="mockup-packaging">
+            <svg viewBox="60 260 270 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="3"/>
+            </svg>
+            <div class="pkg-brand">BØRI</div>
+          </div>
+        </div>
+        <div class="app-info">
+          <div class="app-title">Упаковка</div>
+          <div class="app-desc">Фирменная коробка / пакет для розничных продаж</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-logo">
+      <svg viewBox="60 260 270 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80.4858 388.214L95.9858 403.714L114.986 401.214L130.986 397.714L143.486 390.714L164.486 395.714L177.486 390.714L203.486 388.214L212.986 382.714L225.486 390.714L239.486 397.714L252.986 403.714H264.486H276.486L303.486 390.714L314.486 372.214L321.986 364.214L314.486 337.714L305.986 334.714L296.986 326.214L282.986 319.214L264.486 309.214L246.486 297.214L235.986 284.714L228.986 271.214L218.486 265.214L197.486 271.214L177.486 275.214L161.986 271.214L143.486 280.214L130.986 297.214L112.486 315.214L89.4858 326.214L70.4858 337.714L62.4858 354.714L65.4858 376.214L80.4858 388.214Z" stroke="#A8B0B8" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="footer-brand">BØRI</div>
+    <div class="footer-copy">Brand Guidelines &mdash; Version 1.0 &mdash; 2026</div>
+    <div class="footer-legal">Qazaqstan Apparel &mdash; Astana Special Economic Zone, Kazakhstan<br>All trademarks and brand assets are property of TOO "Qazaqstan Apparel"</div>
+  </div>
+</footer>
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
