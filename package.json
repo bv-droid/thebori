@@ -1,0 +1,8 @@
+{
+  "name": "thebori",
+  "version": "1.0.0",
+  "description": "BØRI — Spirit of the Steppe",
+  "scripts": {
+    "start": "npx serve . -l $PORT --no-clipboard"
+  }
+}
