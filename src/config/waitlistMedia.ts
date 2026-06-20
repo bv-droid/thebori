@@ -3,9 +3,9 @@
    While disabled, the section keeps its plain dark gradient. */
 
 export const waitlistMedia = {
-  enabled: true, // steppe paw-trail backdrop (video to follow later)
-  type: "image" as "image" | "video",
-  image: "/waitlist/join-bg.jpg",
+  enabled: true, // steppe paw-trail backdrop
+  type: "video" as "image" | "video",
+  image: "/waitlist/join-bg.jpg", // fallback still
   video: "/waitlist/join-bg.mp4",
-  poster: "/waitlist/join-bg.jpg", // first frame for the video
+  poster: "/waitlist/join-poster.jpg", // video first frame
 } as const;
