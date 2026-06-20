@@ -44,8 +44,10 @@ export function Experience() {
       <Hero play={entered} />
 
       {/* 02 — The Journey: one continuous film CITY→ROAD→FIELD,
-          with the Manifesto revealed over the FIELD third */}
-      <TheJourney />
+          with the Manifesto revealed over the FIELD third.
+          start={entered} defers the 180-frame preload until the gate is
+          dismissed, so it never competes with first-paint resources. */}
+      <TheJourney start={entered} />
 
       {/* 03 — Field Test Program */}
       <FieldTest />

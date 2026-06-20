@@ -114,6 +114,8 @@ export type Dict = {
       share: string;
       shareText: string;
       copied: string;
+      nextTitle: string;
+      steps: string[];
     };
   };
   footer: {
@@ -290,6 +292,12 @@ export const dictionaries: Record<Locale, Dict> = {
         share: "Пригласить своих",
         shareText: "Я в стае BØRI. STEPPE PROTOCOL. Заходи первым:",
         copied: "Ссылка скопирована",
+        nextTitle: "Что дальше",
+        steps: [
+          "Твой Pack ID закреплён за тобой.",
+          "Перед стартом founding-доступа пришлём первый сигнал.",
+          "Точные даты и цены — при запуске.",
+        ],
       },
     },
     footer: {
@@ -465,10 +473,16 @@ export const dictionaries: Record<Locale, Dict> = {
         share: "Invite your own",
         shareText: "I'm in the BØRI pack. STEPPE PROTOCOL. Get in first:",
         copied: "Link copied",
+        nextTitle: "What happens next",
+        steps: [
+          "Your Pack ID is reserved for you.",
+          "We'll send the first signal before founding access opens.",
+          "Exact dates and pricing — at launch.",
+        ],
       },
     },
     footer: {
-      statement: "The strength is within. The pack is without.",
+      statement: "The strength is within. The pack is around you.",
       navTitle: "Navigate",
       connectTitle: "Contact",
       followTitle: "Follow",
@@ -641,6 +655,12 @@ export const dictionaries: Record<Locale, Dict> = {
         share: "Өзіңдікілерді шақыр",
         shareText: "Мен BØRI үйіріндемін. STEPPE PROTOCOL. Бірінші бол:", // TODO(kz-native)
         copied: "Сілтеме көшірілді",
+        nextTitle: "Әрі қарай не болады", // TODO(kz-native)
+        steps: [
+          "Pack ID-ің саған бекітілді.",
+          "Founding-қол жеткізу басталар алдында алғашқы сигналды жібереміз.",
+          "Нақты күндер мен бағалар — іске қосылғанда.",
+        ], // TODO(kz-native)
       },
     },
     footer: {

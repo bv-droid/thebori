@@ -1,4 +1,5 @@
 import { waitlistConfig } from "@/config/waitlist";
+import { FOUNDING_SEED } from "./useWaitlistCount";
 import { getAttribution } from "./attribution";
 
 export type WaitlistResult = {
@@ -18,7 +19,13 @@ export async function submitWaitlist(
 
   if (!waitlistConfig.waitlistId) {
     await new Promise((r) => setTimeout(r, 700));
-    return { position: 184, referral: "", demo: true };
+    // demo position sits just past the displayed counter (seed) so the assigned
+    // Pack ID stays plausible against the scarcity number the visitor just saw
+    return {
+      position: FOUNDING_SEED + 1 + Math.floor(Math.random() * 6),
+      referral: "",
+      demo: true,
+    };
   }
 
   const res = await fetch(`${waitlistConfig.apiBase}/signup`, {

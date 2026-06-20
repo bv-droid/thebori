@@ -1,0 +1,78 @@
+/* 500-cell occupancy grid — a high-resolution scarcity meter.
+   Each cell = one founding slot; the first N light up platinum in a wave on
+   reveal. Replaces a flat progress bar with a tangible "roster filling up". */
+.wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 1.6vh, 18px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(25, 1fr);
+  gap: clamp(2.5px, 0.55vw, 4.5px);
+  width: 100%;
+  max-width: min(var(--occ-w, 540px), 100%);
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 1.5px;
+  background: rgba(168, 176, 184, 0.05);
+  border: 1px solid rgba(168, 176, 184, 0.1);
+  transition:
+    background 0.55s var(--ease-out),
+    border-color 0.55s var(--ease-out),
+    box-shadow 0.55s var(--ease-out);
+}
+
+/* lit cells only flip to platinum once the block is revealed → staggered wave */
+.on .lit {
+  background: var(--pl-200);
+  border-color: var(--pl-100);
+  box-shadow: 0 0 6px var(--pl-glow);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 28px);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 1.5px;
+  border: 1px solid rgba(168, 176, 184, 0.1);
+  background: rgba(168, 176, 184, 0.05);
+}
+.swatchLit {
+  background: var(--pl-200);
+  border-color: var(--pl-100);
+  box-shadow: 0 0 6px var(--pl-glow);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(20, 1fr);
+    gap: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

@@ -114,7 +114,7 @@ export function FieldTest() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`/field-test/${m.name.toLowerCase()}.jpg`}
-                      alt={m.caption}
+                      alt={`BØRI ${m.name}`}
                       className={styles.mediaImg}
                       loading="lazy"
                     />

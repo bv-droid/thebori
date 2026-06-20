@@ -181,6 +181,19 @@ export function Waitlist() {
           <button type="button" className={styles.share} onClick={onShare}>
             {copied ? t.waitlist.success.copied : t.waitlist.success.share}
           </button>
+          <div className={styles.next}>
+            <span className={styles.nextTitle}>
+              {t.waitlist.success.nextTitle}
+            </span>
+            <ol className={styles.steps}>
+              {t.waitlist.success.steps.map((s, i) => (
+                <li key={i} className={styles.step}>
+                  <span className={styles.stepNum}>{`0${i + 1}`}</span>
+                  {s}
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       )}
     </section>

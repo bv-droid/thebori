@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useI18n } from "@/i18n/LanguageProvider";
+import { typo } from "@/lib/typo";
 import styles from "./RoadJourney.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,7 +15,7 @@ const framePath = (i: number) =>
 
 /* The Journey — ONE continuous film CITY → ROAD → FIELD, scrubbed by scroll.
    The Manifesto reveals line-by-line over the FIELD third. */
-export function TheJourney() {
+export function TheJourney({ start = false }: { start?: boolean }) {
   const { t } = useI18n();
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,12 +36,17 @@ export function TheJourney() {
   const [ready, setReady] = useState(false);
   const [loadPct, setLoadPct] = useState(0);
 
-  // preload frame sequence
+  // preload frame sequence — deferred until `start` (gate dismissed) so the
+  // 180-frame fetch never competes with first-paint resources; low fetch
+  // priority + async decode so it keeps yielding to fonts/critical JS
   useEffect(() => {
+    if (!start) return;
     let loaded = 0;
     const imgs: HTMLImageElement[] = [];
     for (let i = 0; i < FRAMES; i++) {
       const im = new Image();
+      im.decoding = "async";
+      (im as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "low";
       im.src = framePath(i);
       im.onload = im.onerror = () => {
         loaded++;
@@ -50,7 +56,7 @@ export function TheJourney() {
       imgs[i] = im;
     }
     images.current = imgs;
-  }, []);
+  }, [start]);
 
   // canvas draw + scroll-scrub + overlays
   useEffect(() => {
@@ -306,7 +312,7 @@ export function TheJourney() {
                 {t.journey.city.t}
               </span>
             </span>
-            <span className={styles.actS}>{t.journey.city.s}</span>
+            <span className={styles.actS}>{typo(t.journey.city.s)}</span>
           </div>
           <div ref={roadRef} className={styles.act}>
             <span className={styles.actIdx}>02</span>
@@ -315,7 +321,7 @@ export function TheJourney() {
                 {t.journey.road.t}
               </span>
             </span>
-            <span className={styles.actS}>{t.journey.road.s}</span>
+            <span className={styles.actS}>{typo(t.journey.road.s)}</span>
           </div>
           <div ref={fieldRef} className={styles.act}>
             <span className={styles.actIdx}>03</span>
@@ -324,7 +330,7 @@ export function TheJourney() {
                 {t.journey.field.t}
               </span>
             </span>
-            <span className={styles.actS}>{t.journey.field.s}</span>
+            <span className={styles.actS}>{typo(t.journey.field.s)}</span>
           </div>
         </div>
 
@@ -343,7 +349,7 @@ export function TheJourney() {
               className={styles.maniLine}
             >
               <em className={styles.maniEm}>{l.em}</em>
-              {l.rest}
+              {typo(l.rest)}
             </p>
           ))}
         </div>

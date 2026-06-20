@@ -4,6 +4,7 @@ import { Logo } from "@/components/brand/Logo";
 import { LanguageSwitch } from "@/components/ui/LanguageSwitch";
 import { useGeoTelemetry, formatCoords } from "@/lib/useGeoTelemetry";
 import { useI18n } from "@/i18n/LanguageProvider";
+import { typo } from "@/lib/typo";
 import styles from "./Footer.module.css";
 
 // NOTE: social links are placeholders — replace href="#" with the real
@@ -29,7 +30,7 @@ export function Footer() {
       <div className={styles.glow} aria-hidden="true" />
 
       <div className={styles.top}>
-        <p className={styles.statement}>{t.footer.statement}</p>
+        <p className={styles.statement}>{typo(t.footer.statement)}</p>
         <a className={styles.cta} href="#join">
           {t.hero.cta}
           <span className={styles.ctaArrow} aria-hidden="true">

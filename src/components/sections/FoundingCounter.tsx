@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { useWaitlistCount } from "@/lib/useWaitlistCount";
+import { FoundingOccupancy } from "./FoundingOccupancy";
 import styles from "./FoundingCounter.module.css";
 
 /* Live scarcity counter — founding members claimed of 500. Count-up on reveal. */
@@ -66,12 +67,7 @@ export function FoundingCounter() {
         <span className={styles.cap}>/ {cap}</span>
       </div>
       <span className={styles.label}>{t.founding.counter.label}</span>
-      <div className={styles.bar} aria-hidden="true">
-        <div
-          className={styles.fill}
-          style={{ transform: `scaleX(${Math.min(1, display / cap)})` }}
-        />
-      </div>
+      <FoundingOccupancy count={count} cap={cap} />
       <span className={styles.remaining}>{remaining}</span>
     </div>
   );

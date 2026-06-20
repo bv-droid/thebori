@@ -8,7 +8,8 @@ import { waitlistConfig } from "@/config/waitlist";
 
 export const FOUNDING_CAP = 500;
 // head-start seed added to the live signup count for social proof
-export const FOUNDING_SEED = 36;
+// (keeps the counter at 38 after the two QA test leads are removed)
+export const FOUNDING_SEED = 38;
 
 let cache: number | null = null;
 let inflight: Promise<number> | null = null;
