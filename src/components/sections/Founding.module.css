@@ -1,0 +1,138 @@
+.founding {
+  position: relative;
+  background: linear-gradient(180deg, #0c0c0a 0%, #15140f 55%, #0c0c0a 100%);
+  padding: clamp(80px, 13vh, 170px) var(--gutter);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(40px, 6vw, 110px);
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.kicker {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--pl-200);
+}
+.title {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  max-width: 16ch;
+}
+.lead {
+  font-family: var(--ff-body);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--text-dim);
+  max-width: 46ch;
+}
+.benefits {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.benefit::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pl-200);
+  box-shadow: 0 0 8px var(--pl-glow);
+}
+.note {
+  margin-top: var(--s-4);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* right column: the big premium card with the live counter beneath it */
+.cardCol {
+  --pack-w: 540px; /* makes THIS card larger (Waitlist card stays 460) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(28px, 4vh, 56px);
+  width: 100%;
+}
+/* Pack ID card holder (the premium card itself = shared <PackCard>) */
+.cardReveal {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+/* the card materialises THROUGH a growing BØRI-paw aperture on scroll-in
+   (same logo-portal language as the Hero→film transition) */
+.cardPortal {
+  -webkit-mask-image: url("/brand/paw-fill.svg");
+  mask-image: url("/brand/paw-fill.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 50% 60%;
+  mask-position: 50% 60%;
+  -webkit-mask-size: 130px auto;
+  mask-size: 130px auto;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  will-change: -webkit-mask-size, mask-size;
+}
+@supports not ((-webkit-mask-image: url(x)) or (mask-image: url(x))) {
+  .cardPortal {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+@media (max-width: 860px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--s-8);
+  }
+  .cardCol {
+    order: -1;
+    --pack-w: 460px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}

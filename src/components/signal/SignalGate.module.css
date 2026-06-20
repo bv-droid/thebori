@@ -1,0 +1,352 @@
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-gate);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 95% at 50% 40%, #46443e 0%, #322f29 46%, #16140f 100%);
+  transition: opacity 0.8s var(--ease-out), filter 0.8s var(--ease-out);
+}
+
+.exiting {
+  opacity: 0;
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+/* blueprint grid */
+.grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(168, 176, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(168, 176, 184, 0.08) 1px, transparent 1px);
+  background-size: 54px 54px;
+  -webkit-mask-image: radial-gradient(80% 70% at 50% 45%, #000 35%, transparent 85%);
+  mask-image: radial-gradient(80% 70% at 50% 45%, #000 35%, transparent 85%);
+}
+
+/* targeting corner brackets (screen) */
+.corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--pl-line);
+}
+.cTL { top: 22px; left: 22px; border-right: 0; border-bottom: 0; }
+.cTR { top: 22px; right: 22px; border-left: 0; border-bottom: 0; }
+.cBL { bottom: 22px; left: 22px; border-right: 0; border-top: 0; }
+.cBR { bottom: 22px; right: 22px; border-left: 0; border-top: 0; }
+
+.scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pl-glow), transparent);
+  opacity: 0.5;
+  animation: scan 6s linear infinite;
+}
+@keyframes scan {
+  0% { top: 8%; opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { top: 92%; opacity: 0; }
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(28px, 6vh, 64px) var(--gutter);
+  text-align: center;
+}
+
+/* top readout */
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+}
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+/* the offer — tells cold traffic what BØRI is before the ritual */
+.valueProp {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: clamp(0.7rem, 1.1vw, 0.84rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pl-200);
+  box-shadow: 0 0 10px var(--pl-glow);
+  animation: blink 1.8s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.status {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.42em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* center control */
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(22px, 4.5vh, 44px);
+}
+.control {
+  position: relative;
+  width: clamp(240px, 34vh, 340px);
+  height: clamp(240px, 34vh, 340px);
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.paw3d {
+  position: absolute;
+  inset: 15%; /* logo sits INSIDE the targeting ring (ring bigger than the logo) */
+  z-index: 0;
+  pointer-events: none;
+}
+.paw3dCanvas {
+  width: 100%;
+  height: 100%;
+}
+.reticle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--pl-200);
+  pointer-events: none;
+  z-index: 1;
+}
+.ringTicks {
+  fill: none;
+  stroke: var(--pl-line);
+  stroke-width: 1;
+  stroke-dasharray: 1.5 9;
+  transform-origin: center;
+  animation: spin 26s linear infinite;
+}
+.ringThin {
+  fill: none;
+  stroke: rgba(168, 176, 184, 0.3);
+  stroke-width: 1;
+}
+.ringProg {
+  fill: none;
+  stroke: var(--pl-200);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--pl-glow));
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.1s linear;
+}
+.bracket { fill: none; stroke: var(--pl-200); stroke-width: 1.4; opacity: 0.7; }
+.cross { stroke: rgba(168, 176, 184, 0.4); stroke-width: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.flash {
+  position: absolute;
+  inset: -25%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 219, 221, 0.62), transparent 62%);
+  pointer-events: none;
+  animation: flash 0.8s var(--ease-out) forwards;
+}
+@keyframes flash {
+  0% { opacity: 0; transform: scale(0.6); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.45); }
+}
+
+/* mountain-training telemetry HUD */
+.hud {
+  width: min(380px, 82vw);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.hudHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-dim);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--pl-line);
+}
+.hudState {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--pl-200);
+  letter-spacing: 0.18em;
+}
+.hudPing {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pl-200);
+  box-shadow: 0 0 8px var(--pl-glow);
+  animation: blink 1.4s ease-in-out infinite;
+}
+.hudGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 22px;
+}
+.hudRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px dotted rgba(168, 176, 184, 0.14);
+  padding-bottom: 5px;
+}
+.hudLabel {
+  color: var(--text-faint);
+  letter-spacing: 0.16em;
+}
+.hudVal {
+  color: var(--pl-100);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.hudUp {
+  color: var(--pl-300);
+  font-style: normal;
+  font-size: 0.82em;
+}
+.hudFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--text-faint);
+  letter-spacing: 0.18em;
+  padding-top: 4px;
+}
+.feed {
+  color: var(--pl-300);
+  letter-spacing: 0.34em;
+}
+
+/* bottom hint */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* sound on/off chosen before entering the protocol */
+.soundToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  padding: 6px 6px;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.soundToggle:hover,
+.soundToggle:focus-visible {
+  color: var(--text-dim);
+}
+.soundActive {
+  color: var(--pl-200);
+}
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+.eq i {
+  width: 2px;
+  height: 28%;
+  background: currentColor;
+  border-radius: 1px;
+}
+/* muted state: flat short bars */
+.soundToggle:not(.soundActive) .eq i {
+  height: 18%;
+  opacity: 0.6;
+}
+/* active: dancing equaliser */
+.soundActive .eq i {
+  animation: eqbar 0.9s ease-in-out infinite;
+}
+.soundActive .eq i:nth-child(2) { animation-delay: 0.15s; }
+.soundActive .eq i:nth-child(3) { animation-delay: 0.3s; }
+.soundActive .eq i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes eqbar {
+  0%, 100% { height: 25%; }
+  50% { height: 100%; }
+}
+
+.instruction {
+  font-family: var(--ff-mono);
+  font-size: clamp(0.72rem, 1.1vw, 0.86rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.skip {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--pl-line);
+  min-height: 44px;
+  padding: 8px 4px 4px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.skip:hover,
+.skip:focus-visible { color: var(--text); border-color: var(--pl-200); }
+
+@media (prefers-reduced-motion: reduce) {
+  .scan, .ringTicks, .soundActive .eq i { animation: none; }
+  .soundActive .eq i { height: 60%; }
+}

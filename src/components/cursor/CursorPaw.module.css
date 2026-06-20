@@ -1,0 +1,30 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  pointer-events: none;
+  /* hotspot = the claw tip (~2px,1px in the viewBox) sits on the pointer */
+  margin-left: -2px;
+  margin-top: -1px;
+  will-change: transform;
+  transition: opacity 0.3s ease;
+}
+
+.claw {
+  display: block;
+  color: var(--pl-200);
+  filter: drop-shadow(0 1px 3px rgba(12, 12, 10, 0.5))
+    drop-shadow(0 0 5px rgba(168, 176, 184, 0.35));
+  transform-origin: 10% 5%; /* scale from the tip so the hotspot never drifts */
+  transition: transform 0.18s var(--ease-out), opacity 0.18s var(--ease-out);
+}
+
+.hover .claw {
+  transform: scale(1.45);
+  opacity: 0.9;
+}
+
+.down .claw {
+  transform: scale(0.82);
+}

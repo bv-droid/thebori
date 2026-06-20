@@ -1,40 +1,102 @@
+/* ============================================================
+   BORI — STEPPE PROTOCOL · Design tokens & base
+   Source of truth: logo (canon) + #46443E / #A8B0B8
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* — Core brand — */
+  --bori-base: #46443e;        /* СҰР — primary environmental tone */
+  --bori-platinum: #a8b0b8;    /* platinum accent */
+
+  /* — Environment ramp (dark) — */
+  --ink: #0c0c0a;              /* stone black */
+  --charcoal: #15140f;
+  --graphite: #1f1e19;
+  --stone: #2a2823;
+  --earth: #35332c;            /* warm dark earth */
+  --taupe: #5a564c;            /* muted taupe */
+
+  /* — Platinum ramp / lines — */
+  --pl-100: #d7dbdd;
+  --pl-200: #a8b0b8;
+  --pl-300: #7e858b;
+  --pl-line: rgba(168, 176, 184, 0.22);
+  --pl-line-soft: rgba(168, 176, 184, 0.12);
+  --pl-glow: rgba(168, 176, 184, 0.5);
+
+  /* — Fog / smoke — */
+  --fog: rgba(170, 176, 178, 0.06);
+
+  /* — Text — */
+  --text: #e9e7e1;
+  --text-dim: rgba(233, 231, 225, 0.6);
+  --text-faint: rgba(233, 231, 225, 0.52);
+  --text-mono: #a8b0b8;
+
+  /* — Typography — */
+  --ff-display: var(--font-display), "Oswald", system-ui, sans-serif;
+  --ff-body: var(--font-body), "Inter", system-ui, sans-serif;
+  --ff-mono: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+
+  --fs-hero: clamp(4.5rem, 16vw, 16rem);
+  --fs-h1: clamp(2.2rem, 5vw, 4rem);
+  --fs-h2: clamp(1.6rem, 3.2vw, 2.6rem);
+  --fs-lead: clamp(1.05rem, 1.8vw, 1.45rem);
+  --fs-body: clamp(0.95rem, 1.1vw, 1.05rem);
+  --fs-mono: clamp(0.62rem, 0.8vw, 0.74rem);
+  --fs-micro: 0.6rem;
+
+  /* — Spacing (8pt) — */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --s-9: 96px; --s-10: 128px; --s-11: 192px;
+
+  --gutter: clamp(20px, 5vw, 80px);
+  --maxw: 1680px;
+
+  /* — Motion — */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.22s;
+  --dur-base: 0.4s;
+  --dur-slow: 0.9s;
+  --dur-cine: 1.4s;
+
+  /* — Z — */
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-hud: 20;
+  --z-nav: 40;
+  --z-gate: 100;
+
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
+  background: var(--ink);
   overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+body {
+  min-height: 100svh;
+  color: var(--text);
+  background: var(--ink);
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
 }
 
 a {
@@ -42,8 +104,101 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--pl-200);
+  color: var(--ink);
+}
+
+/* Thin platinum scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb {
+  background: var(--earth);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--taupe); }
+
+:focus-visible {
+  outline: 2px solid var(--pl-200);
+  outline-offset: 3px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 4px rgba(168, 176, 184, 0.18);
+}
+/* round gate control gets a round ring */
+.control:focus-visible {
+  border-radius: 50%;
+}
+
+/* custom paw cursor active → hide native cursor everywhere */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+/* …but keep a real caret over text fields for clarity */
+.cursor-none input,
+.cursor-none textarea {
+  cursor: text !important;
+}
+
+/* — Lenis smooth scroll — */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* — Utility primitives — */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mono {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-mono);
+}
+
+.display {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

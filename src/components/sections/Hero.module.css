@@ -1,0 +1,329 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(140% 120% at 50% 8%, #2a2823 0%, #15140f 45%, #0c0c0a 100%);
+  --px: 0;
+  --py: 0;
+}
+
+/* — Environment layers — */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-canvas);
+  pointer-events: none;
+}
+
+.blueprint {
+  left: 0;
+  bottom: 0;
+  width: clamp(340px, 42vw, 660px);
+  height: 92%;
+  top: auto;
+  opacity: 0.92;
+  transform: translate3d(calc(var(--px) * -14px), calc(var(--py) * -8px), 0);
+  -webkit-mask-image: linear-gradient(90deg, #000 58%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 58%, transparent 100%);
+}
+
+.media {
+  inset: 0;
+  z-index: 0;
+}
+.mediaEl {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.field {
+  right: 0;
+  bottom: 0;
+  top: auto;
+  width: clamp(340px, 52vw, 920px);
+  height: 64%;
+  opacity: 0.95;
+  transform: translate3d(calc(var(--px) * 16px), 0, 0);
+  -webkit-mask-image: linear-gradient(270deg, #000 60%, transparent 100%);
+  mask-image: linear-gradient(270deg, #000 60%, transparent 100%);
+}
+
+.figure {
+  left: 50%;
+  bottom: 0;
+  top: auto;
+  height: 82%;
+  width: auto;
+  aspect-ratio: 300 / 600;
+  transform: translate3d(calc(-50% + var(--px) * 8px), 0, 0);
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6));
+}
+.figure svg { width: 100%; height: 100%; }
+
+.scrim {
+  z-index: 4;
+  background:
+    radial-gradient(72% 56% at 50% 50%, rgba(12, 12, 10, 0.52) 0%, transparent 72%),
+    linear-gradient(
+      180deg,
+      rgba(12, 12, 10, 0.5) 0%,
+      transparent 26%,
+      transparent 60%,
+      rgba(12, 12, 10, 0.88) 100%
+    );
+}
+
+.vignette {
+  z-index: 5;
+  background:
+    radial-gradient(120% 80% at 50% 40%, transparent 40%, rgba(12, 12, 10, 0.55) 100%),
+    linear-gradient(180deg, rgba(12, 12, 10, 0.5) 0%, transparent 22%, transparent 70%, rgba(12, 12, 10, 0.85) 100%);
+}
+
+.grain {
+  z-index: 6;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* — Logo portal: the paw enlarges on the Hero (on scroll) and the film
+   blooms through it, handing off seamlessly into TheJourney. Fixed layers
+   (no pin, no margin) so the page height + Journey scrub are untouched. — */
+.portalBd {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  background: #0c0c0a url("/road/seq/steppe_0001.jpg") center / cover no-repeat;
+  filter: brightness(0.2) blur(14px);
+  transform: scale(1.08);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.portal {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  -webkit-mask-image: url("/brand/paw-fill.svg");
+  mask-image: url("/brand/paw-fill.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: var(--ap-x, 50%) var(--ap-y, 62%);
+  mask-position: var(--ap-x, 50%) var(--ap-y, 62%);
+  -webkit-mask-size: var(--ap-size, 120px) auto;
+  mask-size: var(--ap-size, 120px) auto;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  will-change: -webkit-mask-size, mask-size;
+}
+.portalFilm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 46%;
+  display: block;
+}
+@supports not ((-webkit-mask-image: url(x)) or (mask-image: url(x))) {
+  .portal,
+  .portalBd { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal,
+  .portalBd { display: none; }
+}
+
+/* — Content — */
+.content {
+  position: relative;
+  z-index: var(--z-content);
+  min-height: 100svh;
+}
+
+/* tagline ABOVE the walking figure */
+.taglineTop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: clamp(84px, 13vh, 150px);
+  text-align: center;
+  font-family: var(--ff-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  font-size: clamp(0.85rem, 1.7vw, 1.3rem);
+  color: var(--text);
+  text-shadow: 0 2px 30px rgba(12, 12, 10, 0.7);
+  padding-left: 0.5em;
+}
+
+/* logo lockup at leg level + CTA below */
+.lower {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(20px, 3.4vh, 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-5);
+  text-align: center;
+}
+
+.lockup {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoMark {
+  width: clamp(80px, 9vw, 142px);
+  height: auto;
+  color: var(--pl-200);
+  filter: drop-shadow(0 0 34px rgba(168, 176, 184, 0.34));
+}
+
+/* CTA stamped INTO the road — a recessed plate with engraved letters */
+.ctaBtn {
+  font-family: var(--ff-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.78rem;
+  /* engraved text: dark top lip + light bottom catch (light from above) */
+  color: rgba(196, 201, 205, 0.9);
+  text-shadow:
+    0 -1px 1px rgba(0, 0, 0, 0.8),
+    0 1px 0 rgba(200, 206, 210, 0.18);
+  padding: 18px 38px;
+  border-radius: 3px;
+  /* a pressed recess in the asphalt */
+  background: rgba(8, 8, 7, 0.34);
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  border-top-color: rgba(0, 0, 0, 0.65);
+  border-bottom-color: rgba(168, 176, 184, 0.16);
+  box-shadow:
+    inset 0 4px 11px rgba(0, 0, 0, 0.62),
+    inset 0 -1px 0 rgba(168, 176, 184, 0.1),
+    0 1px 0 rgba(168, 176, 184, 0.07); /* outer bottom highlight = sunk in */
+  backdrop-filter: blur(1px);
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    letter-spacing var(--dur-base) var(--ease-out);
+}
+.ctaBtn:hover {
+  color: rgba(224, 228, 231, 0.98);
+  letter-spacing: 0.4em;
+  box-shadow:
+    inset 0 6px 15px rgba(0, 0, 0, 0.72),
+    inset 0 -1px 0 rgba(168, 176, 184, 0.14),
+    0 1px 0 rgba(168, 176, 184, 0.09);
+}
+.ctaBtn:active {
+  box-shadow:
+    inset 0 8px 18px rgba(0, 0, 0, 0.8),
+    inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.chev {
+  width: 18px;
+  height: 18px;
+  color: var(--text-faint);
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* — HUD — */
+.hud {
+  position: absolute;
+  z-index: var(--z-hud);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-mono);
+  pointer-events: none;
+  text-shadow: 0 2px 14px rgba(12, 12, 10, 0.9);
+}
+
+
+.hudRight {
+  top: 50%;
+  right: var(--gutter);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  text-align: right;
+  transition: opacity 0.6s var(--ease-out);
+}
+.hudHide { opacity: 0; pointer-events: none; }
+.hudShow { opacity: 1; }
+
+.heroLang {
+  position: absolute;
+  z-index: var(--z-hud);
+  bottom: var(--gutter);
+  right: var(--gutter);
+  text-shadow: 0 2px 14px rgba(12, 12, 10, 0.9);
+}
+.bar {
+  width: 120px;
+  height: 1px;
+  background: var(--pl-line);
+  position: relative;
+  overflow: hidden;
+}
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--pl-200);
+  transform-origin: left;
+  animation: load 4s var(--ease-in-out) infinite;
+}
+@keyframes load {
+  0% { transform: scaleX(0); opacity: 0.3; }
+  60% { transform: scaleX(0.85); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0.3; }
+}
+
+.coordsBL { bottom: var(--gutter); left: var(--gutter); color: var(--text-faint); }
+
+/* — Reveal (after entry) — */
+.reveal { opacity: 0; transform: translateY(18px); }
+.play .reveal {
+  animation: rise 1s var(--ease-out-expo) forwards;
+}
+.play .d1 { animation-delay: 0.15s; }
+.play .d2 { animation-delay: 0.35s; }
+.play .d3 { animation-delay: 0.55s; }
+.play .d4 { animation-delay: 0.8s; }
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .blueprint { width: 70vw; height: 60%; opacity: 0.5; }
+  .field { width: 100vw; height: 46%; }
+  .figure { height: 64%; }
+  .hudRight { display: none; }
+  .taglineTop { letter-spacing: 0.36em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .chev, .bar::after { animation: none; }
+}
