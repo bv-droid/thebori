@@ -6,7 +6,6 @@ import { TopNav } from "@/components/ui/TopNav";
 import { Hero } from "@/components/sections/Hero";
 import { TheJourney } from "@/components/sections/RoadJourney";
 import { FieldTest } from "@/components/sections/FieldTest";
-import { Collection } from "@/components/sections/Collection";
 import { Founding } from "@/components/sections/Founding";
 import { Waitlist } from "@/components/sections/Waitlist";
 import { Footer } from "@/components/sections/Footer";
@@ -53,10 +52,10 @@ export function Experience() {
       {/* 03 — Field Test Program */}
       <FieldTest />
 
-      {/* 04 — SERIES 01 · КӨШ (cinematic paw-portal walk through colorways) */}
-      <Collection />
+      {/* Collection section parked — concept being rethought (needs a bolder
+          creative idea). Files kept in sections/Collection.* + config/collection.ts */}
 
-      {/* 05 — Founding Pack (Pack ID card) */}
+      {/* 04 — Founding Pack (Pack ID card) */}
       <Founding />
 
       {/* 05 — Waitlist (join the pack) */}
