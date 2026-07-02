@@ -1,62 +1,67 @@
+/* SERIES 01 · КӨШ — a pinned, full-viewport cinematic walk through the
+   colorways. Each colorway fills the screen; the next is revealed THROUGH a
+   growing BØRI-paw aperture (same portal language as Hero→film). Falls back to
+   flowing full-viewport panels on mobile / reduced-motion (no .pinned class). */
 .collection {
   position: relative;
-  background: linear-gradient(180deg, #0c0c0a 0%, #100f0d 100%);
-  padding: clamp(90px, 14vh, 180px) var(--gutter);
+  background: var(--ink);
 }
 
-.head {
-  max-width: 1200px;
-  margin: 0 auto clamp(40px, 6vh, 80px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--s-4);
+/* pinned mode (added by JS on desktop, motion allowed) */
+.pinned {
+  height: calc(var(--slides, 4) * 100vh);
 }
-.kicker {
-  font-family: var(--ff-mono);
-  font-size: var(--fs-mono);
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--pl-200);
+.sticky {
+  position: relative;
 }
-.title {
-  font-family: var(--ff-display);
-  font-weight: 600;
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1.02;
-  color: var(--text);
-}
-.lead {
-  font-family: var(--ff-body);
-  font-size: var(--fs-lead);
-  line-height: 1.6;
-  color: var(--text-dim);
-  max-width: 54ch;
+.pinned .sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
 }
 
+/* column-grid hairlines — editorial backbone */
 .grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(16px, 2vw, 28px);
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--pl-line-soft) 0,
+    var(--pl-line-soft) 1px,
+    transparent 1px,
+    transparent 20%
+  );
+  opacity: 0.5;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
+/* one colorway */
+.panel {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+}
+.pinned .panel {
+  position: absolute;
+  inset: 0;
 }
 .media {
-  position: relative;
-  aspect-ratio: 3 / 4;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #141310;
-  border: 1px solid var(--pl-line);
-  display: grid;
-  place-items: center;
+  position: absolute;
+  inset: 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 50% 52%;
+  mask-position: 50% 52%;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  will-change: -webkit-mask-size, mask-size, opacity;
+}
+/* incoming layer wears the paw aperture while it blooms */
+.wipe {
+  -webkit-mask-image: url("/brand/paw-fill.svg");
+  mask-image: url("/brand/paw-fill.svg");
 }
 .img {
   position: absolute;
@@ -64,118 +69,179 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s var(--ease-out);
+  object-position: 50% 45%;
 }
-.card:hover .img {
-  transform: scale(1.05);
-}
+/* cinematic grade + scrim for legibility */
 .media::after {
   content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(12, 12, 10, 0.12) 0%,
-    transparent 28%,
-    transparent 62%,
-    rgba(12, 12, 10, 0.55) 100%
-  );
-}
-/* territory chip */
-.terr {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 2;
-  font-family: var(--ff-mono);
-  font-size: var(--fs-micro);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--text);
-  background: rgba(12, 12, 10, 0.5);
-  border: 1px solid var(--pl-line);
-  backdrop-filter: blur(6px);
-  padding: 5px 9px;
-  border-radius: 3px;
-}
-
-/* coming-soon (САЛҚЫН) */
-.placeholder {
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(120% 80% at 50% 28%, rgba(70, 68, 62, 0.35), transparent 70%),
-    linear-gradient(180deg, #1a1916 0%, #0e0d0b 100%);
+    radial-gradient(120% 90% at 50% 40%, rgba(150, 120, 78, 0.14) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(12, 12, 10, 0.5) 0%, transparent 30%, transparent 52%, rgba(12, 12, 10, 0.82) 100%);
+  mix-blend-mode: normal;
 }
-.soon {
-  position: relative;
-  z-index: 1;
+/* coming-soon (САЛҚЫН) */
+.soonMedia {
+  background:
+    radial-gradient(120% 80% at 50% 30%, rgba(70, 68, 62, 0.4), transparent 70%),
+    linear-gradient(180deg, #17150f 0%, #0b0b09 100%);
+}
+.soonTag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: var(--ff-mono);
   font-size: var(--fs-mono);
-  letter-spacing: 0.34em;
+  letter-spacing: 0.5em;
   text-transform: uppercase;
   color: var(--text-faint);
   border: 1px solid var(--pl-line);
-  padding: 8px 14px;
+  padding: 10px 18px;
   border-radius: 3px;
 }
-.cardSoon .name,
-.cardSoon .latin {
-  color: var(--text-dim);
-}
 
-.meta {
+/* caption — editorial block, lower-left on the grid */
+.caption {
+  position: absolute;
+  z-index: 5;
+  left: clamp(24px, 8vw, 140px);
+  bottom: clamp(64px, 12vh, 130px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
+  gap: 6px;
+  max-width: 80vw;
+  pointer-events: none;
+  text-shadow: 0 2px 20px rgba(12, 12, 10, 0.9), 0 1px 3px rgba(12, 12, 10, 0.8);
+}
+.pinned .caption {
+  opacity: 0;
+}
+.terr {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--pl-200);
 }
 .name {
   font-family: var(--ff-display);
   font-weight: 600;
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
   color: var(--text);
+}
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
 }
 .latin {
   font-family: var(--ff-mono);
   font-size: var(--fs-mono);
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--pl-200);
+  color: var(--text);
 }
 .desc {
-  margin-top: 4px;
   font-family: var(--ff-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--text-dim);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
+/* persistent kicker + pager */
+.kicker {
+  position: absolute;
+  z-index: 6;
+  top: clamp(80px, 12vh, 120px);
+  left: clamp(24px, 8vw, 140px);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--pl-200);
+  text-shadow: 0 2px 16px rgba(12, 12, 10, 0.9);
+}
+.pager {
+  position: absolute;
+  z-index: 6;
+  right: clamp(20px, 5vw, 56px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-end;
+}
+.dot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.2em;
+  color: var(--text-faint);
+  transition: color 0.4s var(--ease-out);
+}
+.dot::after {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: var(--pl-line);
+  transition: width 0.4s var(--ease-out), background 0.4s var(--ease-out);
+}
+.dotOn {
+  color: var(--text);
+}
+.dotOn::after {
+  width: 34px;
+  background: var(--pl-200);
+  box-shadow: 0 0 8px var(--pl-glow);
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* grain */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-@media (max-width: 520px) {
-  .grid {
-    grid-template-columns: 1fr;
-    max-width: 420px;
+
+/* fallback (no .pinned): flowing full-viewport panels, all captions shown */
+.pager,
+.kicker {
+  display: none;
+}
+.pinned .pager,
+.pinned .kicker {
+  display: flex;
+}
+.pinned .kicker {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .name {
+    font-size: clamp(2.6rem, 15vw, 5rem);
+  }
+  .caption {
+    left: 24px;
+    bottom: 84px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-  .card:hover .img {
-    transform: none;
+  .media {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    opacity: 1 !important;
   }
 }
