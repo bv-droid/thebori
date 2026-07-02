@@ -65,6 +65,13 @@ export type Dict = {
     intro: string;
     modules: { id: string; name: string; caption: string; status: string }[];
   };
+  collection: {
+    kicker: string;
+    title: string;
+    lead: string;
+    soon: string;
+    items: { name: string; latin: string; territory: string; desc: string }[];
+  };
   founding: {
     kicker: string;
     title: string;
@@ -205,6 +212,18 @@ export const dictionaries: Record<Locale, Dict> = {
         { id: "02", name: "HARDWARE", caption: "Молнии · пряжки · фиксаторы", status: "АКТИВНАЯ РАЗРАБОТКА" },
         { id: "03", name: "CONSTRUCTION", caption: "Усиленные швы · мобильность", status: "РЕВИЗИЯ ПРОТОТИПА" },
         { id: "04", name: "MODULARITY", caption: "Стропы · карманы · адаптивность", status: "ОГРАНИЧЕННЫЙ ПРОГОН" },
+      ],
+    },
+    collection: {
+      kicker: "SERIES 01 · КӨШ",
+      title: "Стая выходит в путь",
+      lead: "Первые образцы BØRI. Единая полевая система — куртка и брюки — в четырёх средах степи.",
+      soon: "Скоро",
+      items: [
+        { name: "ҚАУ", latin: "QAÚ", territory: "ПОЛЕ", desc: "Светлый беж · хлопковый твил" },
+        { name: "ЖУСАН", latin: "JUSAN", territory: "ДОРОГА", desc: "Хаки · полынь степи" },
+        { name: "ТҮН", latin: "TÚN", territory: "ГОРОД", desc: "Тёмно-синий · ночь" },
+        { name: "САЛҚЫН", latin: "SALQYN", territory: "ЛЕТО", desc: "Ткань «холодок» · жилет" },
       ],
     },
     founding: {
@@ -388,6 +407,18 @@ export const dictionaries: Record<Locale, Dict> = {
         { id: "04", name: "MODULARITY", caption: "Straps · pockets · adaptability", status: "LIMITED TEST RUN" },
       ],
     },
+    collection: {
+      kicker: "SERIES 01 · КӨШ",
+      title: "The pack sets out",
+      lead: "The first BØRI samples. One field system — jacket and trousers — across four steppe environments.",
+      soon: "Soon",
+      items: [
+        { name: "ҚАУ", latin: "QAÚ", territory: "FIELD", desc: "Light beige · cotton twill" },
+        { name: "ЖУСАН", latin: "JUSAN", territory: "ROAD", desc: "Khaki · steppe sage" },
+        { name: "ТҮН", latin: "TÚN", territory: "CITY", desc: "Deep navy · night" },
+        { name: "САЛҚЫН", latin: "SALQYN", territory: "SUMMER", desc: "Cool-touch fabric · vest" },
+      ],
+    },
     founding: {
       kicker: "FOUNDING PACK",
       title: "The pack begins with the first circle",
@@ -567,6 +598,18 @@ export const dictionaries: Record<Locale, Dict> = {
         { id: "02", name: "HARDWARE", caption: "Сыдырмалар · тоғалар · бекіткіштер", status: "БЕЛСЕНДІ ӘЗІРЛЕУ" },
         { id: "03", name: "CONSTRUCTION", caption: "Күшейтілген тігістер · қозғалғыштық", status: "ПРОТОТИП ТҮЗЕТУІ" },
         { id: "04", name: "MODULARITY", caption: "Баулар · қалталар · бейімделу", status: "ШЕКТЕУЛІ СЫНАҚ" },
+      ],
+    },
+    collection: {
+      kicker: "SERIES 01 · КӨШ",
+      title: "Үйір көшке шығады", // TODO(kz-native)
+      lead: "BØRI алғашқы үлгілері. Даланың төрт ортасындағы біртұтас дала жүйесі.", // TODO(kz-native)
+      soon: "Жақында",
+      items: [
+        { name: "ҚАУ", latin: "QAÚ", territory: "ДАЛА", desc: "Ашық беж · мақта твилі" }, // TODO(kz-native)
+        { name: "ЖУСАН", latin: "JUSAN", territory: "ЖОЛ", desc: "Хаки · дала жусаны" }, // TODO(kz-native)
+        { name: "ТҮН", latin: "TÚN", territory: "ҚАЛА", desc: "Қою көк · түн" }, // TODO(kz-native)
+        { name: "САЛҚЫН", latin: "SALQYN", territory: "ЖАЗ", desc: "«Холодок» матасы · кеудеше" }, // TODO(kz-native)
       ],
     },
     founding: {
